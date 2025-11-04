@@ -153,12 +153,12 @@ export default function AmrutHeader() {
             <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-orange-50'} py-2 sm:py-3 px-2 sm:px-4 border-b ${isDarkMode ? 'border-gray-700' : 'border-orange-200'}`}>
                 <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-2 sm:gap-3">
                     {/* Logo & Title */}
-                    <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 md:gap-4 w-full lg:flex-1 lg:min-w-0">
-                        <h1 className="text-sm sm:text-xl md:text-1xl lg:text-2xl font-bold text-orange-400 uppercase whitespace-nowrap flex-shrink-0">
+                    <div className="flex flex-col sm:flex-row items-center  sm:gap-3 md:gap-4 w-full lg:flex-1 lg:min-w-0">
+                        <h1 className="text-sm sm:text-xl md:text-1xl lg:text-2xl font-bold text-orange-400 uppercase whitespace-nowrap flex-shrink-0 font-playfair">
                             AMRUT
                         </h1>
-                        <div className="text-center sm:text-center w-full min-w-0 py-1 sm:py-2">
-                            <h2 className="text-sm sm:text-base lg:text-[11px] font-bold text-orange-600 leading-tight break-words">
+                        <div className="text-center sm:text-center w-full min-w-0 ">
+                            <h2 className="text-sm sm:text-base lg:text-[11px] font-bold text-orange-600 leading-tight break-words font-martel">
                                 महाराष्ट्र संशोधन, उन्नती व प्रशिक्षण प्रवोधिनी (अमृत)
                             </h2>
                             <h3 className={`text-xs sm:text-sm md:text-base lg:text-[11px] font-semibold ${isDarkMode ? 'text-gray-200' : 'text-black'} mt-1 leading-tight break-words`}>
@@ -169,21 +169,6 @@ export default function AmrutHeader() {
 
                     {/* Controls */}
                     <div className="flex items-center gap-1 sm:gap-2 md:gap-3 flex-wrap justify-center lg:justify-end">
-                        {/* Socials */}
-                        <div className="hidden lg:flex gap-2">
-                            <Facebook className="text-blue-600" size={18} />
-                            <Twitter className="text-blue-400" size={18} />
-                            <Instagram className="text-pink-600" size={18} />
-                            <Youtube className="text-red-600" size={18} />
-                        </div>
-
-                        {/* Font size + dark mode + lang */}
-                        <div className="hidden md:flex gap-1">
-                            <button onClick={decreaseFontSize}><Minus size={16} /></button>
-                            <button onClick={resetFontSize}><RotateCcw size={16} /></button>
-                            <button onClick={increaseFontSize}><Plus size={16} /></button>
-                        </div>
-
                         <button onClick={toggleDarkMode}>{isDarkMode ? <Sun size={16} /> : <Moon size={16} />}</button>
                         <button className="p-2"><Search size={16} /></button>
 
@@ -193,12 +178,6 @@ export default function AmrutHeader() {
                         >
                             {isMarathi ? 'English' : 'मराठी'}
                         </button>
-
-                        {/* <button className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded bg-orange-600 text-white text-xs md:text-sm font-medium hover:bg-orange-700">
-                            <User size={14} />
-                            <span>{translations.login}</span>
-                        </button> */}
-
                     </div>
                     <CircleSider />
                 </div>
@@ -206,7 +185,7 @@ export default function AmrutHeader() {
 
             {/* --- Main Navigation --- */}
             <nav className={`${isDarkMode ? 'bg-gray-800' : 'bg-orange-600'} shadow-lg`}>
-                <div className="max-w-7xl mx-auto">
+                <div className="max-w-7xl mx-auto flex justify-between items-center">
                     {/* Desktop Menu */}
                     <ul className="hidden lg:flex flex-wrap">
                         {menuStructure.map((menu, idx) => (
@@ -219,7 +198,7 @@ export default function AmrutHeader() {
                                 }}
                             >
                                 <button
-                                    className="flex items-center gap-1 px-4 py-3 text-white hover:bg-orange-700 transition-colors"
+                                    className="flex items-center gap-1 px-4 py-3 text-white hover:bg-orange-700 transition-colors font-martel"
                                 >
                                     {menu.name}
                                     {menu.submenus && (
@@ -264,7 +243,7 @@ export default function AmrutHeader() {
                                                         >
                                                             <a
                                                                 href="#"
-                                                                className="block px-5 py-3 text-gray-100 hover:bg-gray-700 transition-colors flex justify-between items-center break-words whitespace-normal border-b border-gray-700"
+                                                                className="block px-5 py-3 text-gray-100 font-martel hover:bg-gray-700 transition-colors flex justify-between items-center break-words whitespace-normal border-b border-gray-700"
                                                             >
                                                                 <span className="pr-2 text-[15px] font-medium">{displayText}</span>
                                                                 {isNested && submenu.submenu && (
@@ -296,7 +275,7 @@ export default function AmrutHeader() {
                                                                             >
                                                                                 <a
                                                                                     href="#"
-                                                                                    className="block px-5 py-3 text-gray-100 hover:bg-gray-700 transition-colors flex justify-between items-center break-words whitespace-normal border-b border-gray-700"
+                                                                                    className="block px-5 py-3 font-martel text-gray-100 hover:bg-gray-700 transition-colors flex justify-between items-center break-words whitespace-normal border-b border-gray-700"
                                                                                 >
                                                                                     <span className="pr-2 text-[15px] font-medium">{hasSubdetails ? nestedItem.title : nestedItem}</span>
                                                                                     {hasSubdetails && (
@@ -307,7 +286,7 @@ export default function AmrutHeader() {
                                                                                 {/* Subdetails level */}
                                                                                 {hasSubdetails && (
                                                                                     <div
-                                                                                        className="fixed w-96 bg-gray-800 shadow-xl opacity-0 invisible group-hover/nested:opacity-100 group-hover/nested:visible transition-all duration-200 max-h-[200px] overflow-y-auto z-[52]"
+                                                                                        className="fixed w-96 bg-gray-800 shadow-xl opacity-0 invisible group-hover/nested:opacity-100 group-hover/nested:visible transition-all duration-200 max-h-[300px] overflow-y-auto z-[52]"
                                                                                         style={{
                                                                                             top: 'var(--nested-top)',
                                                                                             left: 'var(--nested-left)'
@@ -317,7 +296,7 @@ export default function AmrutHeader() {
                                                                                             <a
                                                                                                 key={detailIdx}
                                                                                                 href="#"
-                                                                                                className="block px-5 py-3 text-gray-100 hover:bg-gray-700 transition-colors break-words whitespace-normal text-[15px] font-medium border-b border-gray-700"
+                                                                                                className="block px-5 py-3 text-gray-100 font-martel hover:bg-gray-700 transition-colors break-words whitespace-normal text-[15px] font-medium border-b border-gray-700"
                                                                                             >
                                                                                                 {detail}
                                                                                             </a>
@@ -340,191 +319,212 @@ export default function AmrutHeader() {
                         ))}
                     </ul>
 
-                    {/* --- Mobile Menu --- */}
-                    <div className="lg:hidden flex items-center justify-between px-4 py-3">
-                        <span className="text-white font-medium">{isMarathi ? 'मेनू' : 'Menu'}</span>
-                        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-white p-2">
-                            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    {/* Social Media Icons and Login - Desktop */}
+                    <div className="hidden lg:flex items-center gap-4 px-4">
+                        <div className="flex gap-3">
+                            <a href="#" className="text-white hover:text-gray-200 transition-colors">
+                                <Facebook size={18} />
+                            </a>
+                            <a href="#" className="text-white hover:text-gray-200 transition-colors">
+                                <Twitter size={18} />
+                            </a>
+                            <a href="#" className="text-white hover:text-gray-200 transition-colors">
+                                <Instagram size={18} />
+                            </a>
+                            <a href="#" className="text-white hover:text-gray-200 transition-colors">
+                                <Youtube size={18} />
+                            </a>
+                        </div>
+                        <button className="px-4 py-2 bg-white text-orange-600 rounded-md hover:bg-gray-100 transition-colors text-sm font-medium">
+                            Login
                         </button>
                     </div>
+                </div>
 
-                    <AnimatePresence>
-                        {mobileMenuOpen && (
-                            <motion.div
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: 'auto' }}
-                                exit={{ opacity: 0, height: 0 }}
-                                transition={{ duration: 0.3 }}
-                                className={`${isDarkMode ? 'bg-gray-700' : 'bg-orange-700'} overflow-hidden`}
-                            >
-                                {menuStructure.map((menu, idx) => (
-                                    <div key={idx}>
-                                        <div className="flex items-center justify-between">
-                                            <a
-                                                href={menu.link || '#'}
-                                                className="flex-1 px-4 py-3 text-white border-b border-orange-600"
-                                                onClick={(e) => {
-                                                    if (menu.submenus) {
-                                                        e.preventDefault();
-                                                        setMobileNestedSubmenu(prev => ({
-                                                            menuIdx: prev.menuIdx === idx ? null : idx,
-                                                            subIdx: null
-                                                        }));
-                                                    }
-                                                }}
-                                            >
-                                                {menu.name}
-                                            </a>
-                                            {menu.submenus && (
-                                                <motion.button
-                                                    onClick={() => setMobileNestedSubmenu(prev => ({
+                {/* --- Mobile Menu --- */}
+                <div className="lg:hidden flex items-center justify-between px-4 py-3">
+                    <span className="text-white font-medium">{isMarathi ? 'मेनू' : 'Menu'}</span>
+                    <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-white p-2">
+                        {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    </button>
+                </div>
+
+                <AnimatePresence>
+                    {mobileMenuOpen && (
+                        <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className={`${isDarkMode ? 'bg-gray-700' : 'bg-orange-700'} overflow-hidden`}
+                        >
+                            {menuStructure.map((menu, idx) => (
+                                <div key={idx}>
+                                    <div className="flex items-center justify-between">
+                                        <a
+                                            href={menu.link || '#'}
+                                            className="flex-1 px-4 py-3 text-white border-b border-orange-600"
+                                            onClick={(e) => {
+                                                if (menu.submenus) {
+                                                    e.preventDefault();
+                                                    setMobileNestedSubmenu(prev => ({
                                                         menuIdx: prev.menuIdx === idx ? null : idx,
                                                         subIdx: null
-                                                    }))}
-                                                    className="px-4 py-3 text-white border-b border-orange-600"
-                                                    animate={{ rotate: mobileNestedSubmenu.menuIdx === idx ? 180 : 0 }}
-                                                    transition={{ duration: 0.2 }}
-                                                >
-                                                    <ChevronDown size={20} />
-                                                </motion.button>
-                                            )}
-                                        </div>
+                                                    }));
+                                                }
+                                            }}
+                                        >
+                                            {menu.name}
+                                        </a>
+                                        {menu.submenus && (
+                                            <motion.button
+                                                onClick={() => setMobileNestedSubmenu(prev => ({
+                                                    menuIdx: prev.menuIdx === idx ? null : idx,
+                                                    subIdx: null
+                                                }))}
+                                                className="px-4 py-3 text-white border-b border-orange-600"
+                                                animate={{ rotate: mobileNestedSubmenu.menuIdx === idx ? 180 : 0 }}
+                                                transition={{ duration: 0.2 }}
+                                            >
+                                                <ChevronDown size={20} />
+                                            </motion.button>
+                                        )}
+                                    </div>
 
-                                        <AnimatePresence>
-                                            {menu.submenus && mobileNestedSubmenu.menuIdx === idx && (
-                                                <motion.div
-                                                    initial={{ opacity: 0, y: -10 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    exit={{ opacity: 0, y: -10 }}
-                                                    transition={{ duration: 0.25 }}
-                                                    className={`${isDarkMode ? 'bg-gray-600' : 'bg-orange-600'}`}
-                                                >
-                                                    {menu.submenus.map((submenu, subIdx) => {
-                                                        const isNested = isSubMenuItem(submenu);
-                                                        const displayText = isNested ? submenu.title : submenu;
+                                    <AnimatePresence>
+                                        {menu.submenus && mobileNestedSubmenu.menuIdx === idx && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -10 }}
+                                                transition={{ duration: 0.25 }}
+                                                className={`${isDarkMode ? 'bg-gray-600' : 'bg-orange-600'}`}
+                                            >
+                                                {menu.submenus.map((submenu, subIdx) => {
+                                                    const isNested = isSubMenuItem(submenu);
+                                                    const displayText = isNested ? submenu.title : submenu;
 
-                                                        return (
-                                                            <div key={subIdx}>
-                                                                <div className="flex items-center justify-between">
-                                                                    <a
-                                                                        href="#"
-                                                                        className="flex-1 px-6 py-2 text-white text-sm border-b border-orange-500 hover:bg-orange-500 transition-colors"
-                                                                        onClick={(e) => {
-                                                                            if (isNested && submenu.submenu) {
-                                                                                e.preventDefault();
-                                                                                setMobileNestedSubmenu(prev => ({
-                                                                                    menuIdx: prev.menuIdx,
-                                                                                    subIdx: prev.subIdx === subIdx ? null : subIdx
-                                                                                }));
-                                                                            }
-                                                                        }}
-                                                                    >
-                                                                        {displayText}
-                                                                    </a>
-                                                                    {isNested && submenu.submenu && (
-                                                                        <motion.button
-                                                                            onClick={() => setMobileNestedSubmenu(prev => ({
+                                                    return (
+                                                        <div key={subIdx}>
+                                                            <div className="flex items-center justify-between">
+                                                                <a
+                                                                    href="#"
+                                                                    className="flex-1 px-6 py-2 text-white text-sm border-b border-orange-500 hover:bg-orange-500 transition-colors"
+                                                                    onClick={(e) => {
+                                                                        if (isNested && submenu.submenu) {
+                                                                            e.preventDefault();
+                                                                            setMobileNestedSubmenu(prev => ({
                                                                                 menuIdx: prev.menuIdx,
                                                                                 subIdx: prev.subIdx === subIdx ? null : subIdx
-                                                                            }))}
-                                                                            className="px-4 py-2 text-white border-b border-orange-500"
-                                                                            animate={{ rotate: mobileNestedSubmenu.subIdx === subIdx ? 180 : 0 }}
-                                                                            transition={{ duration: 0.2 }}
-                                                                        >
-                                                                            <ChevronDown size={16} />
-                                                                        </motion.button>
-                                                                    )}
-                                                                </div>
+                                                                            }));
+                                                                        }
+                                                                    }}
+                                                                >
+                                                                    {displayText}
+                                                                </a>
+                                                                {isNested && submenu.submenu && (
+                                                                    <motion.button
+                                                                        onClick={() => setMobileNestedSubmenu(prev => ({
+                                                                            menuIdx: prev.menuIdx,
+                                                                            subIdx: prev.subIdx === subIdx ? null : subIdx
+                                                                        }))}
+                                                                        className="px-4 py-2 text-white border-b border-orange-500"
+                                                                        animate={{ rotate: mobileNestedSubmenu.subIdx === subIdx ? 180 : 0 }}
+                                                                        transition={{ duration: 0.2 }}
+                                                                    >
+                                                                        <ChevronDown size={16} />
+                                                                    </motion.button>
+                                                                )}
+                                                            </div>
 
-                                                                {/* Second Level Mobile Submenu */}
-                                                                <AnimatePresence>
-                                                                    {isNested && submenu.submenu && mobileNestedSubmenu.subIdx === subIdx && (
-                                                                        <motion.div
-                                                                            initial={{ opacity: 0, y: -10 }}
-                                                                            animate={{ opacity: 1, y: 0 }}
-                                                                            exit={{ opacity: 0, y: -10 }}
-                                                                            transition={{ duration: 0.25 }}
-                                                                            className={`${isDarkMode ? 'bg-gray-500' : 'bg-orange-500'}`}
-                                                                        >
-                                                                            {submenu.submenu.map((nestedItem, nestedIdx) => {
-                                                                                const hasSubdetails = isSubDetail(nestedItem);
-                                                                                const nestedText = hasSubdetails ? nestedItem.title : nestedItem;
+                                                            {/* Second Level Mobile Submenu */}
+                                                            <AnimatePresence>
+                                                                {isNested && submenu.submenu && mobileNestedSubmenu.subIdx === subIdx && (
+                                                                    <motion.div
+                                                                        initial={{ opacity: 0, y: -10 }}
+                                                                        animate={{ opacity: 1, y: 0 }}
+                                                                        exit={{ opacity: 0, y: -10 }}
+                                                                        transition={{ duration: 0.25 }}
+                                                                        className={`${isDarkMode ? 'bg-gray-500' : 'bg-orange-500'}`}
+                                                                    >
+                                                                        {submenu.submenu.map((nestedItem, nestedIdx) => {
+                                                                            const hasSubdetails = isSubDetail(nestedItem);
+                                                                            const nestedText = hasSubdetails ? nestedItem.title : nestedItem;
 
-                                                                                return (
-                                                                                    <div key={nestedIdx}>
-                                                                                        <div className="flex items-center justify-between">
-                                                                                            <a
-                                                                                                href="#"
-                                                                                                className="flex-1 px-8 py-2 text-white text-sm border-b border-orange-400 hover:bg-orange-400 transition-colors"
-                                                                                                onClick={(e) => {
-                                                                                                    if (hasSubdetails) {
-                                                                                                        e.preventDefault();
-                                                                                                        setMobileFinalSubmenu(prev => ({
-                                                                                                            menuIdx: prev.menuIdx,
-                                                                                                            subIdx: prev.subIdx,
-                                                                                                            nestedIdx: prev.nestedIdx === nestedIdx ? null : nestedIdx
-                                                                                                        }));
-                                                                                                    }
-                                                                                                }}
-                                                                                            >
-                                                                                                {nestedText}
-                                                                                            </a>
-                                                                                            {hasSubdetails && (
-                                                                                                <motion.button
-                                                                                                    onClick={() => setMobileFinalSubmenu(prev => ({
+                                                                            return (
+                                                                                <div key={nestedIdx}>
+                                                                                    <div className="flex items-center justify-between">
+                                                                                        <a
+                                                                                            href="#"
+                                                                                            className="flex-1 px-8 py-2 text-white text-sm border-b border-orange-400 hover:bg-orange-400 transition-colors"
+                                                                                            onClick={(e) => {
+                                                                                                if (hasSubdetails) {
+                                                                                                    e.preventDefault();
+                                                                                                    setMobileFinalSubmenu(prev => ({
                                                                                                         menuIdx: prev.menuIdx,
                                                                                                         subIdx: prev.subIdx,
                                                                                                         nestedIdx: prev.nestedIdx === nestedIdx ? null : nestedIdx
-                                                                                                    }))}
-                                                                                                    className="px-4 py-2 text-white border-b border-orange-400"
-                                                                                                    animate={{ rotate: mobileFinalSubmenu.nestedIdx === nestedIdx ? 180 : 0 }}
-                                                                                                    transition={{ duration: 0.2 }}
-                                                                                                >
-                                                                                                    <ChevronDown size={16} />
-                                                                                                </motion.button>
-                                                                                            )}
-                                                                                        </div>
-
-                                                                                        {/* Third Level Mobile Submenu */}
-                                                                                        <AnimatePresence>
-                                                                                            {hasSubdetails && mobileFinalSubmenu.nestedIdx === nestedIdx && (
-                                                                                                <motion.div
-                                                                                                    initial={{ opacity: 0, y: -10 }}
-                                                                                                    animate={{ opacity: 1, y: 0 }}
-                                                                                                    exit={{ opacity: 0, y: -10 }}
-                                                                                                    transition={{ duration: 0.25 }}
-                                                                                                    className={`${isDarkMode ? 'bg-gray-400' : 'bg-orange-400'}`}
-                                                                                                >
-                                                                                                    {nestedItem.subdetails.map((detail, detailIdx) => (
-                                                                                                        <a
-                                                                                                            key={detailIdx}
-                                                                                                            href="#"
-                                                                                                            className="block px-10 py-2 text-white text-sm border-b border-orange-300 hover:bg-orange-300 transition-colors"
-                                                                                                        >
-                                                                                                            {detail}
-                                                                                                        </a>
-                                                                                                    ))}
-                                                                                                </motion.div>
-                                                                                            )}
-                                                                                        </AnimatePresence>
+                                                                                                    }));
+                                                                                                }
+                                                                                            }}
+                                                                                        >
+                                                                                            {nestedText}
+                                                                                        </a>
+                                                                                        {hasSubdetails && (
+                                                                                            <motion.button
+                                                                                                onClick={() => setMobileFinalSubmenu(prev => ({
+                                                                                                    menuIdx: prev.menuIdx,
+                                                                                                    subIdx: prev.subIdx,
+                                                                                                    nestedIdx: prev.nestedIdx === nestedIdx ? null : nestedIdx
+                                                                                                }))}
+                                                                                                className="px-4 py-2 text-white border-b border-orange-400"
+                                                                                                animate={{ rotate: mobileFinalSubmenu.nestedIdx === nestedIdx ? 180 : 0 }}
+                                                                                                transition={{ duration: 0.2 }}
+                                                                                            >
+                                                                                                <ChevronDown size={16} />
+                                                                                            </motion.button>
+                                                                                        )}
                                                                                     </div>
-                                                                                );
-                                                                            })}
-                                                                        </motion.div>
-                                                                    )}
-                                                                </AnimatePresence>
-                                                            </div>
-                                                        );
-                                                    })}
-                                                </motion.div>
-                                            )}
-                                        </AnimatePresence>
-                                    </div>
-                                ))}
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </div>
+
+                                                                                    {/* Third Level Mobile Submenu */}
+                                                                                    <AnimatePresence>
+                                                                                        {hasSubdetails && mobileFinalSubmenu.nestedIdx === nestedIdx && (
+                                                                                            <motion.div
+                                                                                                initial={{ opacity: 0, y: -10 }}
+                                                                                                animate={{ opacity: 1, y: 0 }}
+                                                                                                exit={{ opacity: 0, y: -10 }}
+                                                                                                transition={{ duration: 0.25 }}
+                                                                                                className={`${isDarkMode ? 'bg-gray-400' : 'bg-orange-400'}`}
+                                                                                            >
+                                                                                                {nestedItem.subdetails.map((detail, detailIdx) => (
+                                                                                                    <a
+                                                                                                        key={detailIdx}
+                                                                                                        href="#"
+                                                                                                        className="block px-10 py-2 text-white text-sm border-b border-orange-300 hover:bg-orange-300 transition-colors"
+                                                                                                    >
+                                                                                                        {detail}
+                                                                                                    </a>
+                                                                                                ))}
+                                                                                            </motion.div>
+                                                                                        )}
+                                                                                    </AnimatePresence>
+                                                                                </div>
+                                                                            );
+                                                                        })}
+                                                                    </motion.div>
+                                                                )}
+                                                            </AnimatePresence>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            ))}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </nav>
         </div>
     );

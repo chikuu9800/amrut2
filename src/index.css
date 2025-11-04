@@ -8,3 +8,9 @@
   font-weight: 700;
   font-style: normal;
 }
+@font-face {
+  font-family: 'Martel';
+  src: url('./assets/fonts/Martel/Martel-Light.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}

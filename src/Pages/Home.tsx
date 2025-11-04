@@ -363,12 +363,12 @@ const Home = () => {
           transition={{ type: "spring", stiffness: 120 }}
         >
           <motion.div
-            className="overflow-y-auto h-[300px] border rounded-xl shadow-lg p-4 bg-white"
+            className="overflow-y-auto h-[300px] border rounded-xl shadow-lg p-4 bg-white font-Martel"
             whileHover={{ scale: 1.01, boxShadow: "0px 8px 24px rgba(0,0,0,0.08)" }}
             transition={{ duration: 0.3 }}
           >
             <motion.h2
-              className="text-2xl font-bold text-blue-800 mb-4"
+              className="text-2xl font-bold text-blue-800 mb-4 font-Martel"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
@@ -387,7 +387,7 @@ const Home = () => {
                     onClick={() => toggleAccordion(index)}
                     whileHover={{ x: 3 }}
                     whileTap={{ scale: 0.97 }}
-                    className="w-full flex justify-between items-center py-2 text-left font-semibold hover:text-blue-700 transition-colors duration-200"
+                    className="font-Martel w-full flex justify-between items-center py-2 text-left font-semibold hover:text-blue-700 transition-colors duration-200"
                   >
                     <span>{typeof item === "string" ? item : item.title}</span>
                     {typeof item !== "string" && item.submenu && (
@@ -437,7 +437,7 @@ const Home = () => {
                                       animate={{ height: "auto", opacity: 1 }}
                                       exit={{ height: 0, opacity: 0 }}
                                       transition={{ duration: 0.4 }}
-                                      className="pl-4 list-disc text-gray-600"
+                                      className="pl-4 list-disc text-gray-600 font-Martel"
                                     >
                                       {sub.subdetails.map((detail, i) => (
                                         <motion.li
