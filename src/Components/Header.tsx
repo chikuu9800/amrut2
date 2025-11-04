@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     Search, Sun, Moon, Plus, Minus, RotateCcw,
     Facebook, Twitter, Instagram, Youtube, ChevronDown, Menu, X
@@ -8,17 +9,22 @@ import type { Variants, Easing } from 'framer-motion';
 import CircleSider from './Circlesider';
 import { useLanguage } from "../Context/AuthContext.tsx";
 
+interface SchemeDetail {
+    name: string;
+    link: string;
+}
+
 interface SubDetail {
     title: string;
-    subdetails: string[];
+    subdetails: SchemeDetail[];
 }
 
 interface SubMenuItem {
     title: string;
-    submenu: (string | SubDetail)[];
+    submenu: (SchemeDetail | SubDetail)[];
 }
 
-type SchemeItem = string | SubMenuItem;
+type SchemeItem = SchemeDetail | SubMenuItem;
 
 interface MenuItem {
     name: string;
@@ -38,91 +44,164 @@ export default function AmrutHeader() {
     const increaseFontSize = () => setFontSize(prev => Math.min(prev + 2, 24));
     const decreaseFontSize = () => setFontSize(prev => Math.max(prev - 2, 12));
     const resetFontSize = () => setFontSize(16);
-   
-
 
     // Type guards
     function isSubMenuItem(item: SchemeItem): item is SubMenuItem {
         return typeof item === 'object' && 'title' in item && 'submenu' in item;
     }
 
-    function isSubDetail(item: string | SubDetail): item is SubDetail {
+    function isSubDetail(item: SchemeDetail | SubDetail): item is SubDetail {
         return typeof item === 'object' && 'title' in item && 'subdetails' in item;
     }
 
+    const renderSubMenu = (submenu: SchemeItem[], parentClassName: string) => {
+        return submenu.map((item, idx) => {
+            const isNested = isSubMenuItem(item);
+            const displayText = isNested ? item.title : item.name;
+            const link = !isNested ? item.link : undefined;
+
+            return (
+                <div key={idx} className={`relative ${parentClassName}`}>
+                    {link ? (
+                        <Link
+                            to={link}
+                            className="block px-5 py-3 text-gray-100 font-martel hover:bg-gray-700 transition-colors flex justify-between items-center break-words whitespace-normal border-b border-gray-700"
+                        >
+                            <span className="pr-2 text-[15px] font-medium">{displayText}</span>
+                            {isNested && (
+                                <ChevronDown size={16} className="transform -rotate-90 flex-shrink-0 opacity-75" />
+                            )}
+                        </Link>
+                    ) : (
+                        <div className="block px-5 py-3 text-gray-100 font-martel hover:bg-gray-700 transition-colors flex justify-between items-center break-words whitespace-normal border-b border-gray-700">
+                            <span className="pr-2 text-[15px] font-medium">{displayText}</span>
+                            {isNested && (
+                                <ChevronDown size={16} className="transform -rotate-90 flex-shrink-0 opacity-75" />
+                            )}
+                        </div>
+                    )}
+
+                    {isNested && (
+                        <div className="fixed w-96 bg-gray-800 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 max-h-[200px] overflow-y-auto z-[51]">
+                            {item.submenu.map((nestedItem, nestedIdx) => {
+                                const hasSubdetails = isSubDetail(nestedItem);
+                                return hasSubdetails ? (
+                                    <div key={nestedIdx} className="relative group">
+                                        <div className="block px-5 py-3 text-gray-100 font-martel hover:bg-gray-700 transition-colors flex justify-between items-center break-words whitespace-normal border-b border-gray-700">
+                                            <span className="pr-2 text-[15px] font-medium">{nestedItem.title}</span>
+                                            <ChevronDown size={16} className="transform -rotate-90 flex-shrink-0 opacity-75" />
+                                        </div>
+                                        <div className="fixed w-96 bg-gray-800 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 max-h-[200px] overflow-y-auto z-[52]">
+                                            {nestedItem.subdetails.map((detail, detailIdx) => (
+                                                <Link
+                                                    key={detailIdx}
+                                                    to={detail.link}
+                                                    className="block px-5 py-3 text-gray-100 font-martel hover:bg-gray-700 transition-colors break-words whitespace-normal text-[15px] font-medium border-b border-gray-700"
+                                                >
+                                                    {detail.name}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <Link
+                                        key={nestedIdx}
+                                        to={nestedItem.link}
+                                        className="block px-5 py-3 text-gray-100 font-martel hover:bg-gray-700 transition-colors break-words whitespace-normal text-[15px] font-medium border-b border-gray-700"
+                                    >
+                                        {nestedItem.name}
+                                    </Link>
+                                );
+                            })}
+                        </div>
+                    )}
+                </div>
+            );
+        });
+    };
+
     // Menu structure
     const menuStructure: MenuItem[] = [
-        { name: isMarathi ? 'मुख्य पृष्ठ' : 'Home', link: '#' },
-        { name: isMarathi ? 'परिपत्रक' : 'Circulars', link: '#' },
-        { name: isMarathi ? 'गॅलरी' : 'Gallery', link: '#' },
+        { name: isMarathi ? 'मुख्य पृष्ठ' : 'Home', link: '/' },
+        { name: isMarathi ? 'परिपत्रक' : 'Circulars', link: '/Circulars' },
+        { name: isMarathi ? 'गॅलरी' : 'Gallery', link: '/Gallery' },
         {
             name: isMarathi ? 'योजना' : 'Schemes',
             submenus: [
-                "अमृत – MCED लघुउद्योजक, स्वयंरोजगार प्रोत्साहन व प्रशिक्षण योजना",
-                "अमृत – विविध स्पर्धा परीक्षा पायाभूत प्रशिक्षण कार्यक्रम",
-                "AIIMS, IIT, IIM, IIIT संस्थांमध्ये प्रवेश घेतलेल्या विद्यार्थ्यांना अर्थसहाय्य योजना",
+                { name: "अमृत – MCED लघुउद्योजक, स्वयंरोजगार प्रोत्साहन व प्रशिक्षण योजना", link: "/schemes/mced" },
+                { name: "अमृत – विविध स्पर्धा परीक्षा पायाभूत प्रशिक्षण कार्यक्रम", link: "/schemes/exam-training" },
+                { name: "AIIMS, IIT, IIM, IIIT संस्थांमध्ये प्रवेश घेतलेल्या विद्यार्थ्यांना अर्थसहाय्य योजना", link: "/schemes/admission-assistance" },
                 {
                     title: "UPSC स्पर्धा परीक्षा",
                     submenu: [
                         {
                             title: "अभियांत्रिकी सेवा",
-                            subdetails: ["पूर्व परीक्षा उत्तीर्ण", "मुख्य परीक्षा उत्तीर्ण"]
+                            subdetails: [
+                                { name: "पूर्व परीक्षा उत्तीर्ण", link: "/schemes/upsc/engineering/pre" },
+                                { name: "मुख्य परीक्षा उत्तीर्ण", link: "/schemes/upsc/engineering/main" }
+                            ]
                         },
                         {
                             title: "नागरी सेवा",
-                            subdetails: ["पूर्व परीक्षा उत्तीर्ण", "मुख्य परीक्षा उत्तीर्ण"]
+                            subdetails: [
+                                { name: "पूर्व परीक्षा उत्तीर्ण", link: "/schemes/upsc/civil/pre" },
+                                { name: "मुख्य परीक्षा उत्तीर्ण", link: "/schemes/upsc/civil/main" }
+                            ]
                         },
                         {
                             title: "वन सेवा",
-                            subdetails: ["पूर्व परीक्षा उत्तीर्ण", "मुख्य परीक्षा उत्तीर्ण"]
+                            subdetails: [
+                                { name: "पूर्व परीक्षा उत्तीर्ण", link: "/schemes/upsc/forest/pre" },
+                                { name: "मुख्य परीक्षा उत्तीर्ण", link: "/schemes/upsc/forest/main" }
+                            ]
                         }
                     ]
                 },
                 {
                     title: "MPSC च्या मुख्य परीक्षा",
                     submenu: [
-                        "अन्न व औषध प्रशासकीय सेवा मुख्य परीक्षा",
-                        "दिवाणी न्यायाधीश कनिष्ठ स्तर व न्याय दंडाधिकारी",
-                        "निरीक्षक वैधमापन शास्त्र मुख्य परीक्षा",
-                        "महाराष्ट्र अराजपत्रित गट-ब",
-                        "महाराष्ट्र कृषी सेवा मुख्य परीक्षा",
-                        "महाराष्ट्र तांत्रिक अभियंता सेवा मुख्य परीक्षा",
-                        "महाराष्ट्र राज्यपत्रित नागरी सेवा संयुक्त पूर्व परीक्षा",
-                        "महाराष्ट्र वन सेवा मुख्य परीक्षा",
-                        "महाराष्ट्र विद्युत अभियांत्रिकी सेवा मुख्य परीक्षा",
-                        "महाराष्ट्र विद्युत व यांत्रिकी अभियांत्रिकी सेवा मुख्य परीक्षा",
-                        "महाराष्ट्र स्थापत्य अभियांत्रिकी सेवा मुख्य परीक्षा",
-                        "राज्य सेवा मुख्य परीक्षा",
+                        { name: "अन्न व औषध प्रशासकीय सेवा मुख्य परीक्षा", link: "/schemes/mpsc/food-drug" },
+                        { name: "दिवाणी न्यायाधीश कनिष्ठ स्तर व न्याय दंडाधिकारी", link: "/schemes/mpsc/judicial" },
+                        { name: "निरीक्षक वैधमापन शास्त्र मुख्य परीक्षा", link: "/schemes/mpsc/inspector" },
+                        { name: "महाराष्ट्र अराजपत्रित गट-ब", link: "/schemes/mpsc/group-b" },
+                        { name: "महाराष्ट्र कृषी सेवा मुख्य परीक्षा", link: "/schemes/mpsc/agriculture" },
+                        { name: "महाराष्ट्र तांत्रिक अभियंता सेवा मुख्य परीक्षा", link: "/schemes/mpsc/technical-engineering" },
+                        { name: "महाराष्ट्र राज्यपत्रित नागरी सेवा संयुक्त पूर्व परीक्षा", link: "/schemes/mpsc/civil-pre" },
+                        { name: "महाराष्ट्र वन सेवा मुख्य परीक्षा", link: "/schemes/mpsc/forest" },
+                        { name: "महाराष्ट्र विद्युत अभियांत्रिकी सेवा मुख्य परीक्षा", link: "/schemes/mpsc/electrical" },
+                        { name: "महाराष्ट्र विद्युत व यांत्रिकी अभियांत्रिकी सेवा मुख्य परीक्षा", link: "/schemes/mpsc/electro-mechanical" },
+                        { name: "महाराष्ट्र स्थापत्य अभियांत्रिकी सेवा मुख्य परीक्षा", link: "/schemes/mpsc/civil-engineering" },
+                        { name: "राज्य सेवा मुख्य परीक्षा", link: "/schemes/mpsc/state" },
                     ],
                 },
-                "शासकीय संगणक टंकलेखन व लघुलेखन परीक्षा (GCC-TBC)",
-                "कृषि उद्योग प्रशिक्षण योजना",
-                "स्वरोजगार प्रोत्साहन व प्रशिक्षण योजना",
-                "ड्रोन पायलट प्रशिक्षण योजना",
-                "अमृत - CIPET कौशल्य विकास प्रशिक्षण",
-                "अमृत - NIELIT कौशल्य विकास प्रशिक्षण",
-                "आर्थिक साक्षरता प्रशिक्षण योजना",
-                "अमृत सुवर्णिम प्रशिक्षण योजना",
-                "अमृत आयात-निर्यात प्रशिक्षण योजना",
-                "अमृत - बेकरी प्रशिक्षण योजना",
-                "तांत्रिक रोजगार प्रशिक्षण (IGTR) योजना",
-                "माहिती तंत्रज्ञान आणि इलेक्ट्रॉनिक्स तसेच उच्च कार्यक्षमता संगणक प्रशिक्षण (C-DAC)",
-                "अमृत - BHAU Incubation Program",
-                "अमृत - MSSU Incubation Program",
-                "अमृत - कलश (MKCL) अमृत सॉफ्ट स्किल व संगणक कौशल्य विकास योजना",
-                "वैक्तिक कर्ज व्याज परतावा योजना",
-                "अमृत - स्वयं शिक्षण प्रोत्साहन योजना",
+                { name: "शासकीय संगणक टंकलेखन व लघुलेखन परीक्षा (GCC-TBC)", link: "/schemes/gcc-tbc" },
+                { name: "कृषि उद्योग प्रशिक्षण योजना", link: "/schemes/agri-training" },
+                { name: "स्वरोजगार प्रोत्साहन व प्रशिक्षण योजना", link: "/schemes/self-employment" },
+                { name: "ड्रोन पायलट प्रशिक्षण योजना", link: "/schemes/drone-pilot" },
+                { name: "अमृत - CIPET कौशल्य विकास प्रशिक्षण", link: "/schemes/cipet" },
+                { name: "अमृत - NIELIT कौशल्य विकास प्रशिक्षण", link: "/schemes/nielit" },
+                { name: "आर्थिक साक्षरता प्रशिक्षण योजना", link: "/schemes/financial-literacy" },
+                { name: "अमृत सुवर्णिम प्रशिक्षण योजना", link: "/schemes/suvarnim" },
+                { name: "अमृत आयात-निर्यात प्रशिक्षण योजना", link: "/schemes/import-export" },
+                { name: "अमृत - बेकरी प्रशिक्षण योजना", link: "/schemes/bakery" },
+                { name: "तांत्रिक रोजगार प्रशिक्षण (IGTR) योजना", link: "/schemes/igtr" },
+                { name: "माहिती तंत्रज्ञान आणि इलेक्ट्रॉनिक्स तसेच उच्च कार्यक्षमता संगणक प्रशिक्षण (C-DAC)", link: "/schemes/cdac" },
+                { name: "अमृत - BHAU Incubation Program", link: "/schemes/bhau" },
+                { name: "अमृत - MSSU Incubation Program", link: "/schemes/mssu" },
+                { name: "अमृत - कलश (MKCL) अमृत सॉफ्ट स्किल व संगणक कौशल्य विकास योजना", link: "/schemes/mkcl" },
+                { name: "वैक्तिक कर्ज व्याज परतावा योजना", link: "/schemes/loan-interest" },
+                { name: "अमृत - स्वयं शिक्षण प्रोत्साहन योजना", link: "/schemes/self-learning" },
             ]
         },
-        { name: isMarathi ? 'वार्ता' : 'News', link: '#' },
-        { name: isMarathi ? 'अमृत दूरोत्सव २०२५' : 'Amrut Festival 2025', link: '#' },
-        { name: isMarathi ? 'अमृत महाराष्ट्र' : 'Amrut Maharashtra', link: '#' },
-        { name: isMarathi ? 'अमृत पथ' : 'Amrut Path', link: '#' },
-        { name: isMarathi ? 'लाभार्थी' : 'Beneficiaries', link: '#' },
-        { name: isMarathi ? 'ई-बुक' : 'E-Book', link: '#' },
-        { name: isMarathi ? 'संपर्क साधा' : 'Contact Us', link: '#' }
+        { name: isMarathi ? 'वार्ता' : 'News', link: '/News' },
+        { name: isMarathi ? 'अमृत दूरोत्सव २०२५' : 'Amrut Festival 2025', link: 'https://www.durgotsav.com/' },
+        { name: isMarathi ? 'अमृत महाराष्ट्र' : 'Amrut Maharashtra', link: 'https://amrutmaharashtra.org/' },
+        { name: isMarathi ? 'अमृत पथ' : 'Amrut Path', link: 'https://amrutpeth.com/' },
+        { name: isMarathi ? 'लाभार्थी' : 'Beneficiaries', link: '/Beneficiaries' },
+        { name: isMarathi ? 'ई-बुक' : 'E-Book', link: '/Book' },
+        { name: isMarathi ? 'संपर्क साधा' : 'Contact Us', link: '/Contact' }
     ];
-
+    
     // Framer motion variants for dropdowns
     const dropdownVariants: Variants = {
         hidden: { opacity: 0, y: -10 },
@@ -145,6 +224,13 @@ export default function AmrutHeader() {
     };
 
     return (
+        <div
+            className={`${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} transition-colors duration-300 `}
+            style={{ fontSize: `${fontSize}px` }}
+        >
+            {/* --- Sub Header --- */}
+            <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-orange-50'} py-2 sm:py-3 px-2 sm:px-4 border-b ${isDarkMode ? 'border-gray-700' : 'border-orange-200'}`}>
+  
         <div
             className={`${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} transition-colors duration-300 `}
             style={{ fontSize: `${fontSize}px` }}
@@ -197,20 +283,39 @@ export default function AmrutHeader() {
                                     setOpenMenu(null);
                                 }}
                             >
-                                <button
-                                    className="flex items-center gap-1 px-4 py-3 text-white hover:bg-orange-700 transition-colors font-martel"
-                                >
-                                    {menu.name}
-                                    {menu.submenus && (
-                                        <motion.span
-                                            animate={{ rotate: openMenu === idx ? 180 : 0 }}
-                                            transition={{ duration: 0.2 }}
-                                        >
-                                            <ChevronDown size={16} />
-                                        </motion.span>
-                                    )}
-                                </button>
-
+                                {menu.link && !menu.link.startsWith('http') ? (
+                                    <Link
+                                        to={menu.link}
+                                        className="flex items-center gap-1 px-4 py-3 text-white hover:bg-orange-700 transition-colors font-martel"
+                                    >
+                                        {menu.name}
+                                        {menu.submenus && (
+                                            <motion.span
+                                                animate={{ rotate: openMenu === idx ? 180 : 0 }}
+                                                transition={{ duration: 0.2 }}
+                                            >
+                                                <ChevronDown size={16} />
+                                            </motion.span>
+                                        )}
+                                    </Link>
+                                ) : (
+                                    <a
+                                        href={menu.link}
+                                        className="flex items-center gap-1 px-4 py-3 text-white hover:bg-orange-700 transition-colors font-martel"
+                                        target={menu.link?.startsWith('http') ? "_blank" : undefined}
+                                        rel={menu.link?.startsWith('http') ? "noopener noreferrer" : undefined}
+                                    >
+                                        {menu.name}
+                                        {menu.submenus && (
+                                            <motion.span
+                                                animate={{ rotate: openMenu === idx ? 180 : 0 }}
+                                                transition={{ duration: 0.2 }}
+                                            >
+                                                <ChevronDown size={16} />
+                                            </motion.span>
+                                        )}
+                                    </a>
+                                )}
                                 {/* Dropdown wrapper with position relative */}
                                 <div className="absolute left-0 top-full">
                                     {/* Dropdown (1st Level) */}
@@ -229,7 +334,8 @@ export default function AmrutHeader() {
                                             >
                                                 {menu.submenus.map((submenu, subIdx) => {
                                                     const isNested = isSubMenuItem(submenu);
-                                                    const displayText = isNested ? submenu.title : submenu;
+                                                    const displayText = isNested ? submenu.title : submenu.name;
+                                                    const link = !isNested ? submenu.link : undefined;
 
                                                     return (
                                                         <div
@@ -241,15 +347,27 @@ export default function AmrutHeader() {
                                                                 e.currentTarget.style.setProperty('--submenu-left', `${rect.right}px`);
                                                             }}
                                                         >
-                                                            <a
-                                                                href="#"
-                                                                className="block px-5 py-3 text-gray-100 font-martel hover:bg-gray-700 transition-colors flex justify-between items-center break-words whitespace-normal border-b border-gray-700"
-                                                            >
-                                                                <span className="pr-2 text-[15px] font-medium">{displayText}</span>
-                                                                {isNested && submenu.submenu && (
-                                                                    <ChevronDown size={16} className="transform -rotate-90 flex-shrink-0 opacity-75" />
-                                                                )}
-                                                            </a>
+                                                            {link ? (
+                                                                <Link
+                                                                    to={link}
+                                                                    className="block px-5 py-3 text-gray-100 font-martel hover:bg-gray-700 transition-colors flex justify-between items-center break-words whitespace-normal border-b border-gray-700"
+                                                                >
+                                                                    <span className="pr-2 text-[15px] font-medium">{displayText}</span>
+                                                                    {isNested && submenu.submenu && (
+                                                                        <ChevronDown size={16} className="transform -rotate-90 flex-shrink-0 opacity-75" />
+                                                                    )}
+                                                                </Link>
+                                                            ) : (
+                                                                <a
+                                                                    href="#"
+                                                                    className="block px-5 py-3 text-gray-100 font-martel hover:bg-gray-700 transition-colors flex justify-between items-center break-words whitespace-normal border-b border-gray-700"
+                                                                >
+                                                                    <span className="pr-2 text-[15px] font-medium">{displayText}</span>
+                                                                    {isNested && submenu.submenu && (
+                                                                        <ChevronDown size={16} className="transform -rotate-90 flex-shrink-0 opacity-75" />
+                                                                    )}
+                                                                </a>
+                                                            )}
 
                                                             {/* Nested submenu */}
                                                             {isNested && submenu.submenu && (
@@ -262,6 +380,7 @@ export default function AmrutHeader() {
                                                                 >
                                                                     {submenu.submenu.map((nestedItem, nestedIdx) => {
                                                                         const hasSubdetails = isSubDetail(nestedItem);
+                                                                        const nestedLink = !hasSubdetails ? nestedItem.link : undefined;
 
                                                                         return (
                                                                             <div
@@ -273,15 +392,31 @@ export default function AmrutHeader() {
                                                                                     e.currentTarget.style.setProperty('--nested-left', `${rect.right}px`);
                                                                                 }}
                                                                             >
-                                                                                <a
-                                                                                    href="#"
-                                                                                    className="block px-5 py-3 font-martel text-gray-100 hover:bg-gray-700 transition-colors flex justify-between items-center break-words whitespace-normal border-b border-gray-700"
-                                                                                >
-                                                                                    <span className="pr-2 text-[15px] font-medium">{hasSubdetails ? nestedItem.title : nestedItem}</span>
-                                                                                    {hasSubdetails && (
-                                                                                        <ChevronDown size={16} className="transform -rotate-90 flex-shrink-0 opacity-75" />
-                                                                                    )}
-                                                                                </a>
+                                                                                {nestedLink ? (
+                                                                                    <Link
+                                                                                        to={nestedLink}
+                                                                                        className="block px-5 py-3 font-martel text-gray-100 hover:bg-gray-700 transition-colors flex justify-between items-center break-words whitespace-normal border-b border-gray-700"
+                                                                                    >
+                                                                                        <span className="pr-2 text-[15px] font-medium">
+                                                                                            {hasSubdetails ? nestedItem.title : nestedItem.name}
+                                                                                        </span>
+                                                                                        {hasSubdetails && (
+                                                                                            <ChevronDown size={16} className="transform -rotate-90 flex-shrink-0 opacity-75" />
+                                                                                        )}
+                                                                                    </Link>
+                                                                                ) : (
+                                                                                    <a
+                                                                                        href="#"
+                                                                                        className="block px-5 py-3 font-martel text-gray-100 hover:bg-gray-700 transition-colors flex justify-between items-center break-words whitespace-normal border-b border-gray-700"
+                                                                                    >
+                                                                                        <span className="pr-2 text-[15px] font-medium">
+                                                                                            {hasSubdetails ? nestedItem.title : nestedItem.name}
+                                                                                        </span>
+                                                                                        {hasSubdetails && (
+                                                                                            <ChevronDown size={16} className="transform -rotate-90 flex-shrink-0 opacity-75" />
+                                                                                        )}
+                                                                                    </a>
+                                                                                )}
 
                                                                                 {/* Subdetails level */}
                                                                                 {hasSubdetails && (
@@ -293,13 +428,13 @@ export default function AmrutHeader() {
                                                                                         }}
                                                                                     >
                                                                                         {nestedItem.subdetails.map((detail, detailIdx) => (
-                                                                                            <a
+                                                                                            <Link
                                                                                                 key={detailIdx}
-                                                                                                href="#"
+                                                                                                to={detail.link}
                                                                                                 className="block px-5 py-3 text-gray-100 font-martel hover:bg-gray-700 transition-colors break-words whitespace-normal text-[15px] font-medium border-b border-gray-700"
                                                                                             >
-                                                                                                {detail}
-                                                                                            </a>
+                                                                                                {detail.name}
+                                                                                            </Link>
                                                                                         ))}
                                                                                     </div>
                                                                                 )}
@@ -322,25 +457,25 @@ export default function AmrutHeader() {
                     {/* Social Media Icons and Login - Desktop */}
                     <div className="hidden lg:flex items-center gap-4 px-4">
                         <div className="flex gap-3">
-                            <a href="#" className="text-white hover:text-gray-200 transition-colors">
+                            <a href="https://www.facebook.com/MahaAmrutOfficial?mibextid=wwXIfr&rdid=Pnccc3lUt3iYNi9W&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1PJ7NuAgnQ%2F%3Fmibextid%3DwwXIfr#" target='blank' className="text-white hover:text-gray-200 transition-colors">
                                 <Facebook size={18} />
                             </a>
-                            <a href="#" className="text-white hover:text-gray-200 transition-colors">
+                            <a target='blank' href="https://x.com/Maha_Amrut" className="text-white hover:text-gray-200 transition-colors">
                                 <Twitter size={18} />
                             </a>
-                            <a href="#" className="text-white hover:text-gray-200 transition-colors">
+                            <a target='blank' href="https://www.instagram.com/mahaamrut_official/?igsh=MThmbWpnYW5qNGdmNw%3D%3D#" className="text-white hover:text-gray-200 transition-colors">
                                 <Instagram size={18} />
                             </a>
-                            <a href="#" className="text-white hover:text-gray-200 transition-colors">
+                            <a target='blank' href="https://www.linkedin.com/in/academy-of-maharashtra-research-upliftment-and-training-718924289?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" className="text-white hover:text-gray-200 transition-colors">
                                 <Youtube size={18} />
                             </a>
                         </div>
-                        <button className="px-2 py-2 bg-white text-orange-600 rounded-md hover:bg-gray-100 transition-colors text-sm font-medium">
-                        लॉगिन
-                        </button>
-                        <button className="px-2 py-2 bg-white text-orange-600 rounded-md hover:bg-gray-100 transition-colors text-sm font-medium">
-                        नोंदणी
-                        </button>
+                        <Link to="https://app.mahaamrut.org.in/amrut/choose-login" className="px-2 py-2 bg-white text-orange-600 rounded-md hover:bg-gray-100 transition-colors text-sm font-medium">
+                            लॉगिन
+                        </Link>
+                        <Link to="https://app.mahaamrut.org.in/amrut/choose-login" className="px-2 py-2 bg-white text-orange-600 rounded-md hover:bg-gray-100 transition-colors text-sm font-medium">
+                            नोंदणी
+                        </Link>
                     </div>
                 </div>
 
@@ -530,5 +665,8 @@ export default function AmrutHeader() {
                 </AnimatePresence>
             </nav>
         </div>
+        </div>
+        </div>
+
     );
 }
