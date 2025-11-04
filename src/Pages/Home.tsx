@@ -331,7 +331,7 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 via-white to-blue-100 mt-[200px]">
+    <div className="bg-gradient-to-br from-blue-50 via-white to-blue-100 ">
     
 
       {/* Animated background */}

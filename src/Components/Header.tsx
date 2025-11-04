@@ -146,7 +146,7 @@ export default function AmrutHeader() {
 
     return (
         <div
-            className={`${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} transition-colors duration-300 shadow-md fixed top-0 left-0 w-full z-50`}
+            className={`${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} transition-colors duration-300 `}
             style={{ fontSize: `${fontSize}px` }}
         >
             {/* --- Sub Header --- */}
