@@ -404,7 +404,7 @@ export default function Header() {
 
             {/* Main Navigation - Made static */}
             <nav 
-                className="bg-white z-40 border-b border-orange-100"
+                className="bg-white z-40 border-b border-orange-100 font-700 text-sm"
                 style={{ fontFamily: 'poppins, serif' }}
             >
                 <div className="bg-white">
