@@ -8,7 +8,7 @@ import Footer from '../Components/Footer'
 import AmrutStats from '../Components/Dynamic'
 import AmrutMissionVision from '../Components/Vison'
 import YojanaSlider from '../Components/Slider'
-import AmritMahotsavSection from '../Components/AmritMahotsavSection'
+import AmrutSlider from '../Components/AmrutSlider'
 
 
 const Home = () => {
@@ -20,7 +20,7 @@ const Home = () => {
       <Tabs />
       <AmrutMissionVision />
       <AnimatedMap />
-      <AmritMahotsavSection/>
+      <AmrutSlider/>
       <MaharashtraShowcase />
       <AmrutStats />
 

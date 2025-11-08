@@ -37,79 +37,82 @@ const slideContent = [
   },
 ];
 
-export default function AmritMahotsavSection() {
+export default function AmrutSli() {
   const [index, setIndex] = useState(0);
   const nextSlide = () => setIndex((prev) => (prev + 1) % slides.length);
   const prevSlide = () => setIndex((prev) => (prev - 1 + slides.length) % slides.length);
   const currentContent = slideContent[index % slideContent.length];
 
   useEffect(() => {
-    const timer = setInterval(() => nextSlide(), 5000);
+    const timer = setInterval(() => nextSlide(), 6000);
     return () => clearInterval(timer);
   }, []);
 
   return (
     <section
-      className="relative w-[80%] m-auto mt-[50px] mb-10 py-5 md:py-16 px-4 md:px-10 overflow-hidden rounded-3xl shadow-2xl"
+      className="relative w-[85%] mx-auto mt-[50px] mb-10 overflow-hidden rounded-3xl shadow-2xl"
       style={{
         background:
-          "linear-gradient(90deg, #ffb26b 0%, #fff3e0 50%, #ffb26b 100%), linear-gradient(to bottom, rgba(255,140,0,0.15), rgba(255,102,0,0.25))",
-        backgroundBlendMode: "overlay",
+          "linear-gradient(120deg, #ffb26b 0%, #fff3e0 50%, #ffb26b 100%)",
       }}
     >
-      {/* Subtle Animated Glow */}
+      {/* Subtle Animated Overlay for Dynamic Feel */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-orange-200/40 via-orange-100/20 to-orange-50/10"
+        className="absolute inset-0 bg-gradient-to-tr from-orange-300/25 via-orange-100/10 to-orange-50/10"
         animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
-        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
         style={{ backgroundSize: "200% 200%" }}
       ></motion.div>
 
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-10 relative z-10">
-        {/* LEFT SIDE — Title above Fort Image */}
-        <motion.div
-          initial={{ opacity: 0, x: -60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1 }}
-          viewport={{ once: true }}
-          className="w-full lg:w-1/2 text-center lg:text-left"
-        >
-          {/* Title Block */}
-          <div className="mb-6">
-           
+      {/* Bottom Shadow Glow */}
+      <div className="absolute bottom-0 left-0 w-full h-[30%] bg-gradient-to-t from-orange-300/40 via-transparent to-transparent z-0"></div>
+
+      {/* Content Wrapper */}
+      <div className="relative z-10 flex flex-col lg:flex-row items-stretch justify-between">
+        {/* LEFT SIDE */}
+        <div className="relative flex flex-col justify-between w-full lg:w-1/2 min-h-[70vh] md:min-h-[75vh] text-center lg:text-left">
+          {/* Title + Description */}
+          <div className="pt-16 px-6 md:px-10 lg:px-14">
             <h2
               className="text-2xl md:text-3xl lg:text-4xl font-bold text-orange-900 leading-snug mb-3"
               style={{ fontFamily: "Baloo, serif" }}
             >
               {currentContent.title}
             </h2>
-            <p className="text-gray-700 text-base md:text-lg mb-6 leading-relaxed max-w-md mx-auto lg:mx-0">
+            <p
+              className="text-gray-800 text-base md:text-lg leading-relaxed max-w-md mx-auto lg:mx-0"
+              style={{ fontFamily: "Poppins, sans-serif" }}
+            >
               {currentContent.desc}
             </p>
           </div>
 
-          {/* Fort Image with Blend */}
-          <div className="flex justify-center relative">
-            <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-orange-200/60 via-transparent to-transparent z-0"></div>
+          {/* Shaniwarwada Fort (Bottom Fixed) */}
+          <div className="relative flex justify-center items-end mt-auto">
+            <motion.div
+              className="absolute bottom-0 left-0 w-full h-[50%] bg-gradient-to-t from-orange-200/70 via-transparent to-transparent"
+              animate={{ opacity: [0.5, 0.8, 0.5] }}
+              transition={{ duration: 6, repeat: Infinity }}
+            ></motion.div>
             <img
               src="/images/wmremove-transformed (1) (1).png"
               alt="Shaniwarwada Fort"
-              className="relative z-10 w-[80%] md:w-[75%] lg:w-[85%] object-contain mix-blend-multiply opacity-95 drop-shadow-[0_25px_60px_rgba(255,140,0,0.3)]"
+              className="relative z-10 w-[85%] md:w-[75%] lg:w-[80%] object-contain mix-blend-multiply opacity-95 drop-shadow-[0_25px_60px_rgba(255,140,0,0.35)]"
             />
           </div>
-        </motion.div>
+        </div>
 
-        {/* RIGHT SIDE — Main Slider with Thumbnails */}
+        {/* RIGHT SIDE — Unified Gradient with Parent */}
         <motion.div
           initial={{ opacity: 0, x: 60 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 1 }}
           viewport={{ once: true }}
-          className="w-full lg:w-1/2 text-center lg:text-left"
+          className="relative w-full lg:w-1/2 flex flex-col justify-center items-center py-10"
         >
-          {/* Main Slide */}
-          <div className="relative w-full max-w-lg mx-auto lg:mx-0">
-            <div className="overflow-hidden rounded-2xl shadow-lg border border-orange-400 bg-white/60 backdrop-blur-sm">
+          <div className="relative w-[85%] max-w-lg">
+            {/* Main Slide */}
+            <div className="overflow-hidden rounded-2xl shadow-lg border border-orange-300 bg-white/60 backdrop-blur-sm">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={index}
@@ -119,7 +122,7 @@ export default function AmritMahotsavSection() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -100 }}
                   transition={{ duration: 0.8, ease: "easeInOut" }}
-                  className="w-full h-56 md:h-72 object-cover rounded-2xl"
+                  className="w-full h-56 md:h-72 lg:h-80 object-cover rounded-2xl"
                 />
               </AnimatePresence>
             </div>
