@@ -22,6 +22,30 @@
     font-weight: normal;
     font-style: normal;
   }
+  @font-face {
+    font-family: 'kand_bold';
+    src: url('./assets/Fonts/Khand/Khand-Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'kand_light';
+    src: url('./assets/Fonts/Khand/Khand-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'kand_medium';
+    src: url('./assets/Fonts/Khand/Khand-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'kand_semibold';
+    src: url('./assets/Fonts/Khand/Khand-SemiBold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
   
   .font-playfair {
     font-family: 'playfair', serif;

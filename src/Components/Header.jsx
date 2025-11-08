@@ -319,7 +319,7 @@ export default function Header() {
     // Main menu structure
     const menuStructure = [
         { name: 'मुख्य पृष्ठ', link: '/' },
-        { name: 'परिपत्रक', link: '/Circulars' },
+        { name: 'परिपत्रक', link: 'paripatra' },
         { name: 'गॅलरी', link: '/Gallery' },
         { name: 'योजना', submenus: schemes },
         { name: 'वार्ता', link: '/News' },
