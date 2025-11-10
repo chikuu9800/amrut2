@@ -77,7 +77,7 @@ const Paripatra = () => {
           className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#4A1D09] drop-shadow-[2px_2px_6px_rgba(0,0,0,0.3)] tracking-tight"
           style={{
             fontFamily: "'baloo', serif",
-            letterSpacing: "-1px",
+            letterSpacing: "-1px",  
           }}
         >
           परिपत्रक

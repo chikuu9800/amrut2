@@ -109,7 +109,7 @@ const AnimatedMapCircle = () => {
   const outerIcons = icons.slice(8);
 
   return (
-    <section className="relative w-full min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-white to-gray-100 overflow-hidden py-20">
+    <section className="relative w-full min-h-screen flex flex-col items-center justify-center  overflow-hidden py-20">
       {/* Title + Description */}
       <div className="text-center mb-6 px-4">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold  text-orange-700 mb-2 leading-tight" style={{ fontFamily: "baloo, sans-serif" }}>

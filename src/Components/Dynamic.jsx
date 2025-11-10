@@ -5,7 +5,7 @@ import { Users, Handshake, MapPin } from "lucide-react";
 
 export default function AmrutStats() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" }); // triggers slightly before fully in view
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const stats = [
     {
@@ -50,18 +50,18 @@ export default function AmrutStats() {
         {stats.map((stat, index) => (
           <motion.div
             key={stat.id}
-            className="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center justify-center hover:shadow-lg transition-all"
+            className="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center justify-center border border-orange-100 transition-all duration-300 ease-out"
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: index * 0.2 }}
+            whileHover={{
+              y: -8,
+              backgroundColor: "rgba(255, 243, 230, 1)", // faint warm tone
+              boxShadow: "0 10px 25px rgba(255, 140, 0, 0.15)",
+            }}
           >
             <div className="mb-3">{stat.icon}</div>
-            {/* Pass isInView to Counter */}
-            <Counter
-              target={stat.value}
-              suffix={stat.suffix}
-              start={isInView}
-            />
+            <Counter target={stat.value} suffix={stat.suffix} start={isInView} />
             <p className="text-lg font-medium text-orange-800 mt-2">
               {stat.title}
             </p>
@@ -72,12 +72,12 @@ export default function AmrutStats() {
   );
 }
 
-// 🔢 Counter Animation Component (starts only when visible)
+// 🔢 Counter Animation (only when visible)
 function Counter({ target, suffix, start }) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    if (!start) return; // only start when in view
+    if (!start) return;
 
     let current = 0;
     const duration = 2000;

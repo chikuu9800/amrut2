@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
     Menu, X, ChevronDown, Search
@@ -72,7 +72,25 @@ export default function Header() {
         nestedIndex: null
     });
     const [searchQuery, setSearchQuery] = useState('');
-
+    useEffect(() => {
+        const handleHover = () => {
+            document.querySelectorAll(".group/submenu, .group/nested").forEach((el) => {
+                const rect = el.getBoundingClientRect();
+                const sub = el.querySelector(".absolute");
+                if (sub) {
+                    if (rect.right + 400 > window.innerWidth) {
+                        sub.style.left = "auto";
+                        sub.style.right = "100%";
+                    } else {
+                        sub.style.left = "100%";
+                        sub.style.right = "auto";
+                    }
+                }
+            });
+        };
+        window.addEventListener("mousemove", handleHover);
+        return () => window.removeEventListener("mousemove", handleHover);
+    }, []);
     function isSubMenuItem(item) {
         return typeof item === 'object' && 'title' in item && 'submenu' in item;
     }
@@ -355,70 +373,70 @@ export default function Header() {
         <div className="bg-white">
             {/* Sub Header - Made static */}
             <div className="bg-white z-50">
-  <div className="max-w-7xl mx-auto px-4 py-3">
-    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-      
-      {/* Left: Logo + Title */}
-      <div className="flex items-center gap-3 justify-center md:justify-start flex-shrink-0">
-        <h1 className="text-[#ff671f] font-bold text-xl md:text-3xl font-playfair">
-          AMRUT
-        </h1>
-        <div className="text-center md:text-left leading-tight">
-          <h2
-            className="text-sm md:text-lg font-bold text-orange-600"
-            style={{ fontFamily: "baloo, sans-serif" }}
-          >
-            महाराष्ट्र संशोधन, उन्नती व प्रशिक्षण प्रवोधिनी (अमृत)
-          </h2>
-          <p className="text-[10px] md:text-xs text-black font-playfair">
-            ACADEMY OF MAHARASHTRA RESEARCH, UPLIFTMENT AND TRAINING (AMRUT)
-          </p>
-        </div>
-      </div>
+                <div className="max-w-7xl mx-auto px-4 py-3">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
 
-      {/* Right: Team Members */}
-      <div className="flex items-center justify-center gap-3 md:gap-6 flex-wrap md:flex-nowrap">
-        {teamMembers.map((member, index) => (
-          <div
-            key={index}
-            className="flex flex-col items-center justify-start w-[85px] sm:w-[95px] md:w-[110px] lg:w-[120px] min-h-[130px] md:min-h-[150px] group cursor-pointer"
-          >
-            {/* Circle Image */}
-            <div className="relative flex-shrink-0">
-              <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300 overflow-hidden">
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
+                        {/* Left: Logo + Title */}
+                        <div className="flex items-center gap-3 justify-center md:justify-start flex-shrink-0">
+                            <h1 className="text-[#ff671f] font-bold text-xl md:text-3xl font-playfair">
+                                AMRUT
+                            </h1>
+                            <div className="text-center md:text-left leading-tight">
+                                <h2
+                                    className="text-sm md:text-lg font-bold text-orange-600"
+                                    style={{ fontFamily: "baloo, sans-serif" }}
+                                >
+                                    महाराष्ट्र संशोधन, उन्नती व प्रशिक्षण प्रवोधिनी (अमृत)
+                                </h2>
+                                <p className="text-[10px] md:text-xs text-black font-playfair">
+                                    ACADEMY OF MAHARASHTRA RESEARCH, UPLIFTMENT AND TRAINING (AMRUT)
+                                </p>
+                            </div>
+                        </div>
 
-            {/* Text */}
-            <div className="text-center mt-1 w-full">
-              <p
-                className="text-[9px] md:text-[11px] font-semibold text-[#ff671f] leading-tight"
-                style={{ fontFamily: "Poppins, sans-serif" }}
-              >
-                {member.name}
-              </p>
-              <p
-                className="text-[7px] md:text-[9px] text-gray-700 font-medium leading-snug"
-                style={{ fontFamily: "Poppins, sans-serif" }}
-              >
-                {member.title}
-              </p>
+                        {/* Right: Team Members */}
+                        <div className="flex items-center justify-center gap-3 md:gap-6 flex-wrap md:flex-nowrap">
+                            {teamMembers.map((member, index) => (
+                                <div
+                                    key={index}
+                                    className="flex flex-col items-center justify-start w-[85px] sm:w-[95px] md:w-[110px] lg:w-[120px] min-h-[130px] md:min-h-[150px] group cursor-pointer"
+                                >
+                                    {/* Circle Image */}
+                                    <div className="relative flex-shrink-0">
+                                        <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300 overflow-hidden">
+                                            <img
+                                                src={member.image}
+                                                alt={member.name}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* Text */}
+                                    <div className="text-center mt-1 w-full">
+                                        <p
+                                            className="text-[9px] md:text-[11px] font-semibold text-[#ff671f] leading-tight"
+                                            style={{ fontFamily: "Poppins, sans-serif" }}
+                                        >
+                                            {member.name}
+                                        </p>
+                                        <p
+                                            className="text-[7px] md:text-[9px] text-gray-700 font-medium leading-snug"
+                                            style={{ fontFamily: "Poppins, sans-serif" }}
+                                        >
+                                            {member.title}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-</div>
 
 
             {/* Main Navigation - Made static */}
-            <nav 
+            <nav
                 className="bg-white z-40 border-b border-orange-100 font-700 text-sm"
                 style={{ fontFamily: 'poppins, serif' }}
             >
@@ -470,17 +488,22 @@ export default function Header() {
                                     )}
 
                                     {/* Dropdown wrapper */}
-                                    <div className="absolute left-0 top-full">
-                                        {/* Dropdown (1st Level) */}
-                                        <AnimatePresence>
-                                            {menu.submenus && openMenu === idx && (
-                                                <motion.div
-                                                    variants={dropdownVariants}
-                                                    initial="hidden"
-                                                    animate="visible"
-                                                    exit="exit"
-                                                    className="absolute left-0 w-96 bg-black/80 backdrop-blur-sm shadow-xl z-50 rounded-sm border border-orange-200"
-                                                    style={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }}
+                                    <AnimatePresence>
+                                        {menu.submenus && openMenu === idx && (
+                                            <motion.div
+                                                variants={dropdownVariants}
+                                                initial="hidden"
+                                                animate="visible"
+                                                exit="exit"
+                                                className="absolute left-0 top-full mt-[2px] w-[320px] bg-black/95 backdrop-blur-md shadow-lg z-[9999] rounded-md border border-orange-400 overflow-hidden"
+                                            >
+                                                {/* Scrollable wrapper */}
+                                                <div
+                                                    className="max-h-[300px] overflow-y-auto overflow-x-hidden custom-scrollbar"
+                                                    style={{
+                                                        scrollbarWidth: "thin",
+                                                        scrollbarColor: "#ff671f transparent",
+                                                    }}
                                                 >
                                                     {menu.submenus.map((submenu, subIdx) => {
                                                         const isNested = isSubMenuItem(submenu);
@@ -488,83 +511,62 @@ export default function Header() {
                                                         const link = !isNested ? submenu.link : undefined;
 
                                                         return (
-                                                            <div
-                                                                key={subIdx}
-                                                                className="relative group/submenu"
-                                                            >
+                                                            <div key={subIdx} className="relative group">
+                                                                {/* === Level 1 Item === */}
                                                                 {link ? (
                                                                     <Link
                                                                         to={link}
-                                                                        className="block px-5 py-3 text-[#ff671f] hover:bg-white/10 transition-colors flex justify-between items-center break-words whitespace-normal border-b border-white/20 text-sm"
+                                                                        className="block px-5 py-3 text-[#ff671f] hover:bg-orange-500/20 hover:text-white transition-all border-b border-white/10 text-sm whitespace-normal"
                                                                     >
-                                                                        <span className="pr-2">{displayText}</span>
-                                                                        {isNested && submenu.submenu && (
-                                                                            <ChevronDown size={16} className="transform -rotate-90 flex-shrink-0 text-[#ff671f]" />
-                                                                        )}
+                                                                        {displayText}
                                                                     </Link>
                                                                 ) : (
-                                                                    <div
-                                                                        className="block px-5 py-3 text-[#ff671f] hover:bg-white/10 transition-colors flex justify-between items-center break-words whitespace-normal border-b border-white/20 text-sm cursor-pointer"
-                                                                    >
-                                                                        <span className="pr-2">{displayText}</span>
-                                                                        {isNested && submenu.submenu && (
-                                                                            <ChevronDown size={16} className="transform -rotate-90 flex-shrink-0 text-[#ff671f]" />
+                                                                    <div className="flex justify-between items-center px-5 py-3 text-[#ff671f] hover:bg-orange-500/20 hover:text-white transition-all border-b border-white/10 text-sm cursor-pointer whitespace-normal">
+                                                                        {displayText}
+                                                                        {submenu.submenu && (
+                                                                            <ChevronDown size={16} className="transform -rotate-90 text-[#ff671f]" />
                                                                         )}
                                                                     </div>
                                                                 )}
 
-                                                                {/* Nested submenu */}
+                                                                {/* === Level 2 Submenu === */}
                                                                 {isNested && submenu.submenu && (
                                                                     <div
-                                                                        className="absolute left-full top-0 w-96 bg-black/80 shadow-xl opacity-0 invisible group-hover/submenu:opacity-100 group-hover/submenu:visible transition-all duration-200 rounded-sm border border-orange-200"
-                                                                        style={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }}
+                                                                        className="absolute top-0 left-full w-[320px] bg-black/95 border border-orange-400 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[10000]"
+                                                                        style={{
+                                                                            maxHeight: "300px",
+                                                                            overflowY: "auto",
+                                                                            overflowX: "hidden",
+                                                                        }}
                                                                     >
                                                                         {submenu.submenu.map((nestedItem, nestedIdx) => {
                                                                             const hasSubdetails = isSubDetail(nestedItem);
                                                                             const nestedText = hasSubdetails ? nestedItem.title : nestedItem.name;
-                                                                            const nestedLink = !hasSubdetails ? nestedItem.link : undefined;
 
                                                                             return (
-                                                                                <div
-                                                                                    key={nestedIdx}
-                                                                                    className="relative group/nested"
-                                                                                >
-                                                                                    {nestedLink ? (
-                                                                                        <Link
-                                                                                            to={nestedLink}
-                                                                                            className="block px-5 py-3 text-[#ff671f] hover:bg-white/10 transition-colors flex justify-between items-center break-words whitespace-normal border-b border-white/20 text-sm"
-                                                                                        >
-                                                                                            <span className="pr-2">
-                                                                                                {nestedText}
-                                                                                            </span>
-                                                                                            {hasSubdetails && (
-                                                                                                <ChevronDown size={16} className="transform -rotate-90 flex-shrink-0 text-[#ff671f]" />
-                                                                                            )}
-                                                                                        </Link>
-                                                                                    ) : (
-                                                                                        <div
-                                                                                            className="block px-5 py-3 text-[#ff671f] hover:bg-white/10 transition-colors flex justify-between items-center break-words whitespace-normal border-b border-white/20 text-sm cursor-pointer"
-                                                                                        >
-                                                                                            <span className="pr-2">
-                                                                                                {nestedText}
-                                                                                            </span>
-                                                                                            {hasSubdetails && (
-                                                                                                <ChevronDown size={16} className="transform -rotate-90 flex-shrink-0 text-[#ff671f]" />
-                                                                                            )}
-                                                                                        </div>
-                                                                                    )}
+                                                                                <div key={nestedIdx} className="relative group">
+                                                                                    <div className="flex justify-between items-center px-5 py-3 text-[#ff671f] hover:bg-orange-500/20 hover:text-white transition-all border-b border-white/10 text-sm cursor-pointer whitespace-normal">
+                                                                                        {nestedText}
+                                                                                        {hasSubdetails && (
+                                                                                            <ChevronDown size={14} className="transform -rotate-90 text-[#ff671f]" />
+                                                                                        )}
+                                                                                    </div>
 
-                                                                                    {/* Subdetails level */}
+                                                                                    {/* === Level 3 Submenu === */}
                                                                                     {hasSubdetails && (
                                                                                         <div
-                                                                                            className="absolute left-full top-0 w-96 bg-black/80 shadow-xl opacity-0 invisible group-hover/nested:opacity-100 group-hover/nested:visible transition-all duration-200 rounded-sm border border-orange-200"
-                                                                                            style={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }}
+                                                                                            className="absolute top-0 left-full w-[320px] bg-black/95 border border-orange-400 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[10001]"
+                                                                                            style={{
+                                                                                                maxHeight: "300px",
+                                                                                                overflowY: "auto",
+                                                                                                overflowX: "hidden",
+                                                                                            }}
                                                                                         >
                                                                                             {nestedItem.subdetails.map((detail, detailIdx) => (
                                                                                                 <Link
                                                                                                     key={detailIdx}
                                                                                                     to={detail.link}
-                                                                                                    className="block px-5 py-3 text-[#ff671f] hover:bg-white/10 transition-colors break-words whitespace-normal text-sm border-b border-white/20"
+                                                                                                    className="block px-5 py-3 text-[#ff671f] hover:bg-orange-500/20 hover:text-white transition-all border-b border-white/10 text-sm whitespace-normal"
                                                                                                 >
                                                                                                     {detail.name}
                                                                                                 </Link>
@@ -579,10 +581,14 @@ export default function Header() {
                                                             </div>
                                                         );
                                                     })}
-                                                </motion.div>
-                                            )}
-                                        </AnimatePresence>
-                                    </div>
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+
+
+
+
                                 </li>
                             ))}
                         </ul>

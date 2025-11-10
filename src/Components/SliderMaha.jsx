@@ -1,6 +1,6 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import skyline from "/images/Indian_Monuments_PNG-removebg-preview.png";
 import orangeCircle from "/images/Red_dot__Japanese_art_Drawing_Ink_wash_painting__sushi_takeaway__watercolor_Painting__sphere__chinese_Painting_png-removebg-preview (1).png";
 
 const leftImages = [
@@ -35,22 +35,22 @@ const MaharashtraShowcase = () => {
   }, []);
 
   return (
-    <div className="relative w-full flex flex-col justify-center items-center py-20 bg-white h-[90vh] overflow-hidden">
+    <section className="relative w-full flex flex-col justify-center items-center py-12 md:py-16 bg-white overflow-hidden h-auto md:h-[85vh]">
       {/* SECTION HEADER */}
       <motion.h1
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="text-4xl md:text-5xl font-extrabold text-orange-600 mb-10 tracking-wide"
-        style={{ fontFamily: "baloo, sans-serif" }}
+        className="text-3xl md:text-5xl font-extrabold text-orange-600 mb-10 tracking-wide text-center px-4"
+        style={{ fontFamily: "Baloo, sans-serif" }}
       >
         महापुरुषांचे प्रेरणादायी विचार
       </motion.h1>
 
       {/* MAIN CONTENT */}
-      <div className="relative z-20 w-[80%] rounded-3xl overflow-hidden flex flex-col md:flex-row bg-white shadow-[0_10px_25px_rgba(0,0,0,0.08)]">
-        {/* LEFT SECTION */}
-        <div className="md:w-1/2 w-full flex justify-center items-center p-10 bg-orange-50">
+      <div className="relative z-20 w-[90%] md:w-[80%] rounded-3xl flex flex-col md:flex-row bg-gradient-to-br from-orange-50 via-white to-orange-100 shadow-[0_10px_25px_rgba(0,0,0,0.08)] overflow-hidden md:h-[60vh]">
+        {/* LEFT IMAGE SIDE */}
+        <div className="md:w-1/2 w-full flex justify-center items-center bg-orange-50 p-8 sm:p-10 md:h-full h-[300px]">
           <AnimatePresence mode="wait">
             <motion.img
               key={index}
@@ -60,14 +60,15 @@ const MaharashtraShowcase = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -40 }}
               transition={{ duration: 0.8 }}
-              className="rounded-2xl w-3/4 h-64 object-contain shadow-md bg-white p-4"
+              className="object-contain w-[250px] sm:w-[300px] md:w-[350px] h-[250px] sm:h-[300px] md:h-[350px]"
+              style={{ filter: "drop-shadow(0px 8px 10px rgba(0,0,0,0.15))" }}
             />
           </AnimatePresence>
         </div>
 
-        {/* RIGHT SECTION */}
+        {/* RIGHT TEXT SIDE */}
         <div
-          className="md:w-1/2 w-full relative flex flex-col justify-center items-center text-center p-10"
+          className="md:w-1/2 w-full relative flex flex-col justify-center items-center text-center p-6 sm:p-10 bg-white md:h-full h-auto"
           style={{
             backgroundImage: `url(${orangeCircle})`,
             backgroundPosition: "center",
@@ -83,20 +84,23 @@ const MaharashtraShowcase = () => {
               exit={{ opacity: 0, x: -100 }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-orange-700 mb-4" style={{ fontFamily: "baloo, sans-serif" }}>
+              <h2
+                className="text-2xl md:text-4xl font-bold text-orange-700 mb-4"
+                style={{ fontFamily: "Baloo, sans-serif" }}
+              >
                 {data[index].title}
               </h2>
-              <p className="text-gray-700 text-lg md:text-xl leading-relaxed italic" style={{ fontFamily: "poppins, serif" }}>
+              <p
+                className="text-gray-700 text-base md:text-xl leading-relaxed italic"
+                style={{ fontFamily: "Poppins, serif" }}
+              >
                 {data[index].details}
               </p>
             </motion.div>
           </AnimatePresence>
         </div>
       </div>
-
-      
-      
-    </div>
+    </section>
   );
 };
 

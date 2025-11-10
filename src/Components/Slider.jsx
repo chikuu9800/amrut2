@@ -48,7 +48,7 @@ export default function AboutAmrut() {
   const currentItem = aboutData.find((item) => item.id === selected);
 
   return (
-    <section className="relative w-full bg-gradient-to-b from-orange-50 to-white py-16 px-4 md:px-10">
+    <section className="relative w-full  py-16 px-4 md:px-10">
       {/* Section Header */}
       <div className="text-center mb-10">
         <h2

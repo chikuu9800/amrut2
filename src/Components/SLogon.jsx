@@ -55,16 +55,12 @@
 //     </section>
 //   );
 // }
-
-
 import React from "react";
 import { motion } from "framer-motion";
 
 export default function SLogon() {
   return (
-    <section
-      className="relative w-full min-h-[80vh] py-10 px-4 flex items-center justify-center overflow-hidden"
-    >
+    <section className="relative w-full min-h-[80vh] py-10 px-4 flex items-center justify-center overflow-hidden">
       {/* === Full Background Skyline Image === */}
       <div
         className="absolute inset-0 bg-no-repeat bg-bottom bg-cover opacity-100 -z-10"
@@ -81,15 +77,15 @@ export default function SLogon() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
         viewport={{ once: true, amount: 0.3 }}
-        className="relative max-w-6xl w-full bg-gradient-to-r from-orange-100 via-white to-orange-50 rounded-2xl shadow-xl flex flex-col md:flex-row items-center gap-6 md:gap-10 p-6 md:p-10 z-10 overflow-visible"
+        className="relative max-w-6xl w-full rounded-2xl shadow-xl flex flex-col md:flex-row items-center gap-6 md:gap-10 p-6 md:p-10 z-10 overflow-visible"
       >
-        {/* --- Maharashtra Map --- */}
+        {/* --- Maharashtra Map (Hidden on Mobile) --- */}
         <motion.div
           initial={{ opacity: 0, x: -80 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 1 }}
           viewport={{ once: true, amount: 0.4 }}
-          className="absolute -left-0 md:-left-0 top-0 -translate-y-1/2 flex-shrink-0"
+          className="hidden md:block absolute -left-0 top-0 -translate-y-1/2 flex-shrink-0"
         >
           <div className="absolute inset-0 bg-orange-400 opacity-30 blur-2xl rounded-full w-64 h-64 -z-10 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2" />
           <img
@@ -108,7 +104,7 @@ export default function SLogon() {
           className="flex-1 text-center md:text-left md:ml-[40%]"
           style={{ fontFamily: "baloo, sans-serif" }}
         >
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 leading-snug">
+          <h1 className="text-2xl md:text-3xl font-bold text-orange-700 leading-snug">
             महाराष्ट्र संशोधन, उन्नती व प्रशिक्षण प्रवोधिनी (अमृत)
           </h1>
           <p className="text-gray-700 mt-4 text-lg">

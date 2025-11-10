@@ -85,9 +85,21 @@
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #ff671f, #ff4500);
 }
-
-/* For Firefox */
+/* 
+For Firefox
 * {
   scrollbar-width: thin;
   scrollbar-color: #ff671f #fff7ed;
 }
+
+
+
+
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #ff671f;
+  border-radius: 6px;
+} */
