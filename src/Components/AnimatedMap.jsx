@@ -103,27 +103,34 @@ const AnimatedMapCircle = () => {
     return () => ctx.revert();
   }, []);
 
-  const innerRadius = 110; // smaller radius for compact fit
+  const innerRadius = 110;
   const outerRadius = 170;
   const innerIcons = icons.slice(0, 8);
   const outerIcons = icons.slice(8);
 
   return (
-    <section className="relative w-full min-h-screen flex flex-col items-center justify-center  overflow-hidden py-20">
-      {/* Title + Description */}
-      <div className="text-center mb-6 px-4">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold  text-orange-700 mb-2 leading-tight" style={{ fontFamily: "baloo, sans-serif" }}>
+    <section className="relative w-full min-h-[80vh] flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16 px-6 sm:px-10 md:px-20 py-16 bg-gradient-to-b from-orange-50 via-white to-orange-100 overflow-hidden">
+      
+      {/* === Left Section: Text === */}
+      <div className="flex-1 text-center md:text-left max-w-xl space-y-4">
+        <h2
+          className="text-3xl sm:text-4xl md:text-5xl font-bold text-orange-700 leading-tight"
+          style={{ fontFamily: "baloo, sans-serif" }}
+        >
           महाराष्ट्र संशोधन, उन्नती आणि प्रशिक्षण प्रबोधनी
         </h2>
-        <p className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed font-medium max-w-2xl mx-auto">
+        <p className="text-gray-700 text-base sm:text-lg leading-relaxed font-medium">
           राज्यातील युवक, युवती आणि इतर उमेदवारांच्या सर्वांगीण विकासासाठी विविध
           उद्योग, रोजगार, ऊर्जा, शिक्षण व प्रशिक्षण क्षेत्रात प्रोत्साहन देणारी
           संस्था — “अमृत प्रबोधनी”.
         </p>
+        <p className="text-gray-600 text-sm sm:text-base">
+          महाराष्ट्राच्या सर्वांगीण विकासासाठी नवोन्मेष, प्रशिक्षण आणि संशोधनाचे एकत्रिकरण.
+        </p>
       </div>
 
-      {/* Map + Circles */}
-      <div className="relative flex items-center justify-center w-full h-[60vh] sm:h-[65vh] md:h-[70vh]">
+      {/* === Right Section: Animated Map Circle === */}
+      <div className="flex-1 relative flex items-center justify-center w-full h-[60vh] sm:h-[65vh] md:h-[70vh]">
         {/* Outer Circle */}
         <div className="outer-ring absolute w-[350px] sm:w-[420px] md:w-[460px] h-[350px] sm:h-[420px] md:h-[460px] border border-orange-300 rounded-full flex items-center justify-center">
           {outerIcons.map((Icon, index) => {
@@ -134,7 +141,7 @@ const AnimatedMapCircle = () => {
               <div
                 key={index}
                 ref={(el) => (outerIconsRef.current[index] = el)}
-                className="absolute text-orange-500 opacity-0 hover:scale-110 transition-transform duration-300"
+                className="absolute text-orange-500 opacity-0 hover:scale-125 transition-transform duration-300"
                 style={{ transform: `translate(${x}px, ${y}px)` }}
               >
                 <Icon size={26} className="sm:size-[30px]" />
@@ -153,7 +160,7 @@ const AnimatedMapCircle = () => {
               <div
                 key={index}
                 ref={(el) => (innerIconsRef.current[index] = el)}
-                className="absolute text-orange-500 opacity-0 hover:scale-110 transition-transform duration-300"
+                className="absolute text-orange-500 opacity-0 hover:scale-125 transition-transform duration-300"
                 style={{ transform: `translate(${x}px, ${y}px)` }}
               >
                 <Icon size={22} className="sm:size-[26px]" />
@@ -170,7 +177,7 @@ const AnimatedMapCircle = () => {
           <img
             src={mapImg}
             alt="Maharashtra Map"
-            className="w-full h-full object-contain drop-shadow-lg"
+            className="w-full h-full object-contain drop-shadow-[0_0_30px_rgba(255,140,0,0.4)]"
           />
         </div>
       </div>

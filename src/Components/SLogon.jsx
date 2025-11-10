@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 export default function SLogon() {
   return (
     <section
-      className="relative w-full min-h-[60vh] py-10 px-4 flex items-center justify-center overflow-hidden my-10"
+      className="relative w-full min-h-[60vh] py-10 px-4 flex items-center justify-center overflow-hidden  "
     >
       {/* === Background Skyline Image (Smaller + Faded) === */}
       <div
@@ -23,7 +23,7 @@ export default function SLogon() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
         viewport={{ once: true, amount: 0.3 }}
-        className="relative max-w-6xl w-full bg-white rounded-2xl shadow-xl flex flex-col md:flex-row items-center gap-6 md:gap-10 p-6 md:p-10 z-10 overflow-visible"
+        className="relative max-w-6xl w-full bg-white rounded-2xl shadow-xl flex flex-col md:flex-row items-center gap-6 md:gap-10 p-6 md:p-10 z-10 overflow-visible my-[50px]"
       >
         {/* --- Maharashtra Map (Hidden on Mobile) --- */}
         <motion.div
