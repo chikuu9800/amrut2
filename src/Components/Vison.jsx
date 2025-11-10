@@ -28,15 +28,10 @@ export default function AmrutMissionVision() {
   ];
 
   return (
-    <motion.section
-      initial={{ backgroundPosition: "0% 0%" }}
-      animate={{ backgroundPosition: ["0% 0%", "0% 100%", "0% 0%"] }}
-      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-      className="relative py-16 text-center bg-gradient-to-b from-orange-50 via-orange-100 to-white bg-[length:100%_200%] overflow-hidden"
-    >
+    <section className="relative min-h-screen py-20 text-center bg-gradient-to-b from-orange-50 via-orange-100 to-orange bg-[length:100%_200%] overflow-hidden">
       {/* === Title === */}
       <motion.h2
-        className="text-3xl md:text-4xl font-bold text-orange-800 mb-4"
+        className="text-4xl md:text-5xl font-bold text-orange-800 mb-6"
         style={{ fontFamily: "Baloo, serif" }}
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -48,13 +43,13 @@ export default function AmrutMissionVision() {
 
       {/* === Description === */}
       <motion.p
-        className="text-gray-700 text-md md:text-lg mb-12 max-w-3xl mx-auto"
+        className="text-gray-700 text-md md:text-lg mb-14 max-w-3xl mx-auto leading-relaxed"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.3 }}
         viewport={{ once: true }}
       >
-        महाराष्ट्र संशोधन, उन्नती व प्रशिक्षण प्रवोधिनी (अमृत) चा उद्देश म्हणजे  
+        महाराष्ट्र संशोधन, उन्नती व प्रशिक्षण प्रवोधिनी (अमृत) चा उद्देश म्हणजे
         नागरिकाभिमुख योजना आणि उपक्रमांद्वारे राज्याच्या सर्वांगीण विकासाला चालना देणे.
       </motion.p>
 
@@ -63,11 +58,16 @@ export default function AmrutMissionVision() {
         {cards.map((card, index) => (
           <motion.div
             key={card.id}
-            className="bg-white rounded-2xl shadow-md hover:shadow-lg p-8 flex flex-col items-center transition-all border border-orange-100 hover:border-orange-200"
+            className="bg-white rounded-2xl shadow-md hover:shadow-xl p-8 flex flex-col items-center transition-all border border-orange-100 hover:border-orange-200"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: index * 0.2 }}
             viewport={{ once: true }}
+            whileHover={{
+              y: -8,
+              scale: 1.05,
+              boxShadow: "0 10px 25px rgba(255, 140, 0, 0.25)",
+            }}
           >
             <div className="w-16 h-16 flex items-center justify-center bg-orange-100 rounded-full mb-4 shadow-inner">
               {card.icon}
@@ -84,6 +84,6 @@ export default function AmrutMissionVision() {
           </motion.div>
         ))}
       </div>
-    </motion.section>
+    </section>
   );
 }
