@@ -49,7 +49,7 @@ export default function AmrutBanner() {
 
   return (
     <section
-      className="relative w-[80%] m-auto min-h-[65vh] sm:min-h-[60vh] md:min-h-[65vh] flex flex-col md:flex-row overflow-hidden rounded-3xl shadow-2xl my-10"
+      className="relative w-[100%] m-auto min-h-[55vh] sm:min-h-[50vh] md:min-h-[55vh] flex flex-col md:flex-row overflow-hidden  shadow-2xl"
       style={{
         backgroundImage: `url('/images/1000_F_581566986_vjGXzCbNhpH5yvsNoN0dhZoG9mcVOnBK.jpg')`,
         backgroundSize: "cover",
@@ -118,7 +118,7 @@ export default function AmrutBanner() {
         </div>
       </div>
 
-      {/* RIGHT SIDE - GRADIENT PANEL */}
+      {/* RIGHT SIDE - IMAGE PANEL */}
       <motion.div
         className="relative w-full md:w-1/2 bg-gradient-to-bl from-orange-50 via-orange-100 to-orange-200 flex justify-center items-center py-12 overflow-hidden"
         initial={{ opacity: 0, x: 60 }}
