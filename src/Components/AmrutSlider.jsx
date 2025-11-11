@@ -49,15 +49,17 @@ export default function AmrutSli() {
   }, []);
 
   return (
-    <section className="relative w-full py-16 bg-gradient-to-b from-orange-100 to-white overflow-hidden">
-      <div className="relative w-[85%] mx-auto rounded-3xl shadow-2xl bg-gradient-to-b from-orange-50 via-orange-100 to-white bg-[length:100%_200%] overflow-hidden backdrop-blur-sm">
+    <section className="relative w-[80%] m-auto py-16 bg-white overflow-hidden">
+      <div className="relative w-full mx-auto rounded-3xl  bg-gradient-to-b from-transparent to-orange-500/50 overflow-hidden backdrop-blur-sm">
         <div className="absolute inset-0 bg-gradient-to-t from-orange-300/30 via-transparent to-transparent pointer-events-none"></div>
 
         <div className="relative z-10 flex flex-col lg:flex-row items-stretch justify-between">
           {/* === LEFT SIDE === */}
           <div className="relative flex flex-col justify-between w-full lg:w-1/2 min-h-[50vh] text-center lg:text-left">
             {/* Title + Description */}
-            <div className="pt-16 pb-6 px-6 md:px-10">
+            <motion.div
+            initial={{opacity:0,}}
+            className="pt-16 pb-6 px-6 md:px-10">
               <h2
                 className="text-2xl md:text-3xl lg:text-4xl font-bold text-orange-900 leading-snug mb-3"
                 style={{ fontFamily: "Baloo, serif" }}
@@ -70,7 +72,7 @@ export default function AmrutSli() {
               >
                 {currentContent.desc}
               </p>
-            </div>
+            </motion.div>
 
             {/* Shaniwarwada Fort (Bottom Illustration) */}
             <div className="relative flex justify-center items-end mt-auto">

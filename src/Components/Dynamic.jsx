@@ -41,7 +41,7 @@ export default function AmrutStats() {
       className="relative py-16bg-gradient-to-b from-orange-100 to-white text-center overflow-hidden py-10"
     >
       {/* Subtle gradient overlay for depth */}
-      <div className="absolute inset-0 bg-gradient-to-b from-orange-100 to-white  pointer-events-none"></div>
+      <div className="absolute inset-0 bg-white  pointer-events-none"></div>
 
       <motion.h2
         className="text-3xl md:text-4xl font-bold text-orange-800 mb-10 relative z-10"
@@ -61,7 +61,7 @@ export default function AmrutStats() {
             className=" rounded-2xl shadow-md p-6 flex flex-col items-center justify-center border border-orange-200 transition-all duration-300 ease-out hover:shadow-lg"
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: index * 0.2 }}
+            transition={{ duration: 0, delay: index * 0.2 }}
             whileHover={{
               y: -8,
               backgroundColor: "rgba(255, 235, 210, 1)",
