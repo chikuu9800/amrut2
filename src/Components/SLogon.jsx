@@ -20,7 +20,7 @@ export default function SLogon() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-[80%] m-auto min-h-[50vh] px-4 flex items-center justify-center overflow-hidden"
+      className="relative w-[80%] m-auto min-h-[50vh] px-4 flex items-center justify-center overflow-hidden mt-10"
     >
       {/* === Main Card Animation === */}
       <motion.div
