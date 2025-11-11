@@ -1,8 +1,6 @@
 "use client";
-import React, { useState, useRef, useLayoutEffect } from "react";
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   Brain,
   Wrench,
@@ -18,39 +16,12 @@ import {
   Mail,
 } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
-
 export default function AboutAmrut() {
   const [selected, setSelected] = useState("about");
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
-  const panels = ["about", "establishment", "board", "initiatives", "contact"];
-
-  // === GSAP scroll pinning & switching ===
-  useLayoutEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top top",
-        end: "+=500%",
-        scrub: true,
-        pin: true,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          const index = Math.round(progress * (panels.length - 1));
-          setSelected(panels[index]);
-        },
-      });
-    }, section);
-
-    return () => ctx.revert();
-  }, []);
-
-  // === Icon Animations ===
+  // Animation: bottom-to-top reveal + floating
   const iconVariants = {
     hidden: { opacity: 0, y: 40 },
     visible: (i) => ({
@@ -64,6 +35,7 @@ export default function AboutAmrut() {
     }),
   };
 
+  // Floating motion after appearing
   const floatingAnimation = {
     y: [0, -5, 0],
     transition: {
@@ -105,23 +77,23 @@ export default function AboutAmrut() {
             सामान्य माहिती
           </h3>
           <ul className="space-y-2 mt-2 text-gray-700 text-base">
-            {panels.map((item) => (
+            {[
+              { id: "about", title: "अमृत विषयी" },
+              { id: "establishment", title: "अमृतची स्थापना" },
+              { id: "board", title: "संचालक मंडळ" },
+              { id: "initiatives", title: "उपक्रम आणि योजना" },
+              { id: "contact", title: "संपर्क माहिती" },
+            ].map((item) => (
               <li
-                key={item}
-                onClick={() => setSelected(item)}
+                key={item.id}
+                onClick={() => setSelected(item.id)}
                 className={`cursor-pointer border-l-4 pl-2 transition-all ${
-                  selected === item
+                  selected === item.id
                     ? "border-orange-600 text-orange-700 font-semibold"
                     : "border-transparent hover:text-orange-600"
                 }`}
               >
-                {{
-                  about: "अमृत विषयी",
-                  establishment: "अमृतची स्थापना",
-                  board: "संचालक मंडळ",
-                  initiatives: "उपक्रम आणि योजना",
-                  contact: "संपर्क माहिती",
-                }[item]}
+                {item.title}
               </li>
             ))}
           </ul>
@@ -143,15 +115,18 @@ export default function AboutAmrut() {
                 className="text-xl md:text-2xl font-semibold text-orange-700 mb-3"
                 style={{ fontFamily: "Baloo, serif" }}
               >
-                {{
-                  about: "अमृत विषयी",
-                  establishment: "अमृतची स्थापना",
-                  board: "संचालक मंडळ",
-                  initiatives: "उपक्रम आणि योजना",
-                  contact: "संपर्क माहिती",
-                }[selected]}
+                {
+                  {
+                    about: "अमृत विषयी",
+                    establishment: "अमृतची स्थापना",
+                    board: "संचालक मंडळ",
+                    initiatives: "उपक्रम आणि योजना",
+                    contact: "संपर्क माहिती",
+                  }[selected]
+                }
               </h4>
 
+              {/* Descriptions */}
               {selected === "about" && (
                 <p className="text-base md:text-lg leading-relaxed whitespace-pre-line">
                   महाराष्ट्र संशोधन, उन्नती व प्रशिक्षण प्रवोधिनी (अमृत) ही एक स्वायत्त
@@ -160,6 +135,7 @@ export default function AboutAmrut() {
                   उपलब्ध करून देणे हा या संस्थेचा प्रमुख उद्देश आहे.
                 </p>
               )}
+
               {selected === "establishment" && (
                 <p className="text-base md:text-lg leading-relaxed whitespace-pre-line">
                   दिनांक २२ ऑगस्ट २०१९ रोजी महाराष्ट्र शासनाने शासन निर्णयाद्वारे 'अमृत'
@@ -168,6 +144,7 @@ export default function AboutAmrut() {
                   घडवणे.
                 </p>
               )}
+
               {selected === "board" && (
                 <p className="text-base md:text-lg leading-relaxed whitespace-pre-line">
                   अमृतच्या कार्याची दिशा ठरवण्यासाठी सक्षम संचालक मंडळ कार्यरत आहे.
@@ -175,6 +152,7 @@ export default function AboutAmrut() {
                   दृष्टीने कार्य करणारे सदस्य यांचा समावेश आहे.
                 </p>
               )}
+
               {selected === "initiatives" && (
                 <p className="text-base md:text-lg leading-relaxed whitespace-pre-line">
                   अमृत संस्थेमार्फत विविध प्रशिक्षण, स्वयंरोजगार व उद्योजकता विकासाच्या
@@ -182,6 +160,7 @@ export default function AboutAmrut() {
                   करण्याची प्रेरणा दिली जाते.
                 </p>
               )}
+
               {selected === "contact" && (
                 <div className="space-y-3 text-sm md:text-base">
                   <p>
@@ -205,23 +184,48 @@ export default function AboutAmrut() {
 
             {/* === ICONS SECTION === */}
             <div className="flex flex-col items-center justify-center gap-5 mt-8 md:mt-0 md:mr-6">
-              {/* === ABOUT === */}
               {selected === "about" && (
                 <>
-                  <motion.div custom={0} variants={iconVariants} initial="hidden" animate="visible">
-                    <motion.div className="icon-box" animate={floatingAnimation}>
+                  <motion.div
+                    custom={0}
+                    variants={iconVariants}
+                    initial="hidden"
+                    animate={isInView ? "visible" : "hidden"}
+                  >
+                    <motion.div
+                      className="icon-box"
+                      animate={isInView ? floatingAnimation : {}}
+                    >
                       <Brain size={24} />
                     </motion.div>
                     <p className="icon-label">संशोधन</p>
                   </motion.div>
-                  <motion.div custom={1} variants={iconVariants} initial="hidden" animate="visible">
-                    <motion.div className="icon-box" animate={floatingAnimation}>
+
+                  <motion.div
+                    custom={1}
+                    variants={iconVariants}
+                    initial="hidden"
+                    animate={isInView ? "visible" : "hidden"}
+                  >
+                    <motion.div
+                      className="icon-box"
+                      animate={isInView ? floatingAnimation : {}}
+                    >
                       <Wrench size={24} />
                     </motion.div>
                     <p className="icon-label">प्रशिक्षण</p>
                   </motion.div>
-                  <motion.div custom={2} variants={iconVariants} initial="hidden" animate="visible">
-                    <motion.div className="icon-box" animate={floatingAnimation}>
+
+                  <motion.div
+                    custom={2}
+                    variants={iconVariants}
+                    initial="hidden"
+                    animate={isInView ? "visible" : "hidden"}
+                  >
+                    <motion.div
+                      className="icon-box"
+                      animate={isInView ? floatingAnimation : {}}
+                    >
                       <Briefcase size={24} />
                     </motion.div>
                     <p className="icon-label">रोजगाराच्या संधी</p>
@@ -229,23 +233,24 @@ export default function AboutAmrut() {
                 </>
               )}
 
-              {/* === ESTABLISHMENT === */}
               {selected === "establishment" && (
                 <>
-                  <motion.div custom={0} variants={iconVariants} initial="hidden" animate="visible">
-                    <motion.div className="icon-box" animate={floatingAnimation}>
+                  <motion.div custom={0} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
                       <Brain size={24} />
                     </motion.div>
                     <p className="icon-label">संकल्पना</p>
                   </motion.div>
-                  <motion.div custom={1} variants={iconVariants} initial="hidden" animate="visible">
-                    <motion.div className="icon-box" animate={floatingAnimation}>
+
+                  <motion.div custom={1} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
                       <Wrench size={24} />
                     </motion.div>
                     <p className="icon-label">प्रशिक्षण</p>
                   </motion.div>
-                  <motion.div custom={2} variants={iconVariants} initial="hidden" animate="visible">
-                    <motion.div className="icon-box" animate={floatingAnimation}>
+
+                  <motion.div custom={2} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
                       <ArrowUp size={24} />
                     </motion.div>
                     <p className="icon-label">स्वयंरोजगार</p>
@@ -253,23 +258,22 @@ export default function AboutAmrut() {
                 </>
               )}
 
-              {/* === BOARD === */}
               {selected === "board" && (
                 <>
-                  <motion.div custom={0} variants={iconVariants} initial="hidden" animate="visible">
-                    <motion.div className="icon-box" animate={floatingAnimation}>
+                  <motion.div custom={0} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
                       <Landmark size={24} />
                     </motion.div>
                     <p className="icon-label">राज्य शासन अधिकारी</p>
                   </motion.div>
-                  <motion.div custom={1} variants={iconVariants} initial="hidden" animate="visible">
-                    <motion.div className="icon-box" animate={floatingAnimation}>
+                  <motion.div custom={1} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
                       <Lightbulb size={24} />
                     </motion.div>
                     <p className="icon-label">सेवाश्रय</p>
                   </motion.div>
-                  <motion.div custom={2} variants={iconVariants} initial="hidden" animate="visible">
-                    <motion.div className="icon-box" animate={floatingAnimation}>
+                  <motion.div custom={2} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
                       <Handshake size={24} />
                     </motion.div>
                     <p className="icon-label">सदस्य मार्गदर्शन</p>
@@ -277,23 +281,22 @@ export default function AboutAmrut() {
                 </>
               )}
 
-              {/* === INITIATIVES === */}
               {selected === "initiatives" && (
                 <>
-                  <motion.div custom={0} variants={iconVariants} initial="hidden" animate="visible">
-                    <motion.div className="icon-box" animate={floatingAnimation}>
+                  <motion.div custom={0} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
                       <Wrench size={24} />
                     </motion.div>
                     <p className="icon-label">प्रशिक्षण</p>
                   </motion.div>
-                  <motion.div custom={1} variants={iconVariants} initial="hidden" animate="visible">
-                    <motion.div className="icon-box" animate={floatingAnimation}>
+                  <motion.div custom={1} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
                       <IndianRupee size={24} />
                     </motion.div>
                     <p className="icon-label">स्वयंरोजगार</p>
                   </motion.div>
-                  <motion.div custom={2} variants={iconVariants} initial="hidden" animate="visible">
-                    <motion.div className="icon-box" animate={floatingAnimation}>
+                  <motion.div custom={2} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
                       <Factory size={24} />
                     </motion.div>
                     <p className="icon-label">उद्योग दिशा</p>
@@ -301,23 +304,22 @@ export default function AboutAmrut() {
                 </>
               )}
 
-              {/* === CONTACT === */}
               {selected === "contact" && (
                 <>
-                  <motion.div custom={0} variants={iconVariants} initial="hidden" animate="visible">
-                    <motion.div className="icon-box" animate={floatingAnimation}>
+                  <motion.div custom={0} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
                       <Building size={24} />
                     </motion.div>
                     <p className="icon-label">मुख्य कार्यालय</p>
                   </motion.div>
-                  <motion.div custom={1} variants={iconVariants} initial="hidden" animate="visible">
-                    <motion.div className="icon-box" animate={floatingAnimation}>
+                  <motion.div custom={1} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
                       <Phone size={24} />
                     </motion.div>
                     <p className="icon-label">दूरध्वनी</p>
                   </motion.div>
-                  <motion.div custom={2} variants={iconVariants} initial="hidden" animate="visible">
-                    <motion.div className="icon-box" animate={floatingAnimation}>
+                  <motion.div custom={2} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
                       <Mail size={24} />
                     </motion.div>
                     <p className="icon-label">ईमेल</p>
@@ -354,3 +356,5 @@ export default function AboutAmrut() {
     </section>
   );
 }
+
+
