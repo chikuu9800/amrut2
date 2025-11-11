@@ -1,215 +1,123 @@
 "use client";
-import React, { useState, useRef } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
-import {
-  Brain,
-  Wrench,
-  Briefcase,
-  ArrowUp,
-  Landmark,
-  Lightbulb,
-  Handshake,
-  IndianRupee,
-  Factory,
-  Building,
-  Phone,
-  Mail,
-} from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-export default function AboutAmrut() {
-  const [selected, setSelected] = useState("about");
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
+const leftImages = [
+  "/images/Mahapurush/1.png",
+  "/images/Mahapurush/2.png",
+  "/images/Mahapurush/3.png",
+];
 
-  // === Icon + Label Sets ===
-  const iconSets = {
-    about: [
-      { icon: <Brain size={20} />, label: "संशोधन" },
-      { icon: <Wrench size={20} />, label: "प्रशिक्षण" },
-      { icon: <Briefcase size={20} />, label: "रोजगाराच्या संधी" },
-    ],
-    establishment: [
-      { icon: <Brain size={20} />, label: "संकल्पना" },
-      { icon: <Wrench size={20} />, label: "प्रशिक्षण" },
-      { icon: <ArrowUp size={20} />, label: "स्वयंरोजगार" },
-    ],
-    board: [
-      { icon: <Landmark size={20} />, label: "राज्य शासन अधिकारी" },
-      { icon: <Lightbulb size={20} />, label: "सेवाश्रय" },
-      { icon: <Handshake size={20} />, label: "सदस्य मार्गदर्शन" },
-    ],
-    initiatives: [
-      { icon: <Wrench size={20} />, label: "प्रशिक्षण" },
-      { icon: <IndianRupee size={20} />, label: "स्वयंरोजगार" },
-      { icon: <Factory size={20} />, label: "उद्योग दिशा" },
-    ],
-    contact: [
-      { icon: <Building size={20} />, label: "मुख्य कार्यालय" },
-      { icon: <Phone size={20} />, label: "दूरध्वनी" },
-      { icon: <Mail size={20} />, label: "ईमेल" },
-    ],
-  };
+const data = [
+  {
+    title: "छत्रपती शिवाजी महाराज",
+    details: `"जोपर्यंत तुमच्या मनात आत्मविश्वास आहे, तोपर्यंत तुम्हाला कोणीही पराभूत करू शकत नाही."`,
+  },
+  {
+    title: "लोकमान्य बाळ गंगाधर टिळक",
+    details: `"शिकवण्याचा आणि शिकण्याचा हक्क हा प्रत्येकाचा आहे. तो कोणत्याही परिस्थितीत हिरावून घेतला जाऊ शकत नाही."`,
+  },
+  {
+    title: "स्वामी विवेकानंद",
+    details: `"आपल्या जीवनात शंभर टक्के यश मिळवायचं असेल तर पिळवणुकीला नकार द्या, आणि मनाच्या शुद्धतेवर विश्वास ठेवा."`,
+  },
+];
 
-  // === Icon Animations ===
-  const iconVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: (i) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: i * 0.2, duration: 0.6, ease: "easeOut" },
-    }),
-  };
+const MaharashtraShowcase = () => {
+  const [index, setIndex] = useState(0);
 
-  const floatingAnimation = {
-    y: [0, -4, 0],
-    transition: { duration: 2, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" },
-  };
-
-  // === Text Content ===
-  const content = {
-    about: `महाराष्ट्र संशोधन, उन्नती व प्रशिक्षण प्रवोधिनी (अमृत) ही एक
-स्वायत्त संस्था आहे जी महाराष्ट्र शासनाने स्थापन केली आहे.
-राज्यातील युवकांना संशोधन, कौशल्यविकास व प्रशिक्षणाच्या माध्यमातून
-रोजगाराच्या संधी उपलब्ध करून देणे हा या संस्थेचा प्रमुख उद्देश आहे.`,
-    establishment: `दिनांक २२ ऑगस्ट २०१९ रोजी महाराष्ट्र शासनाने शासन निर्णयाद्वारे
-'अमृत' या संस्थेची स्थापना केली. या संस्थेचा हेतू संशोधन आणि
-प्रशिक्षणाद्वारे युवकांना सक्षम करणे व समाजातील सर्व घटकांचा
-विकास घडवणे आहे.`,
-    board: `अमृतच्या कार्याची दिशा ठरवण्यासाठी सक्षम संचालक मंडळ कार्यरत आहे.
-या मंडळात राज्य शासनातील वरिष्ठ अधिकारी, क्षेत्रातील तज्ज्ञ व
-समाजहितासाठी कार्य करणारे सदस्य आहेत.`,
-    initiatives: `अमृत संस्थेमार्फत विविध प्रशिक्षण, स्वयंरोजगार व उद्योजकता विकासाच्या
-योजना राबविल्या जातात. या योजनांद्वारे युवकांना आत्मनिर्भरतेकडे वाटचाल
-करण्याची प्रेरणा दिली जाते.`,
-    contact: (
-      <div className="space-y-3 text-sm md:text-base">
-        <p>
-          <span className="text-orange-700 font-bold">अमृत मुख्य कार्यालय:</span>
-          <br />
-          ५ वा मजला, हनुमान रोड, मंत्रालय, मुंबई – ४०००३२
-        </p>
-        <p>
-          <span className="text-orange-700 font-bold">दूरध्वनी:</span> ०२२-२२२२२२२२
-        </p>
-        <p>
-          <span className="text-orange-700 font-bold">ईमेल:</span> info@mahaamrut.org.in
-        </p>
-      </div>
-    ),
-  };
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % data.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative w-[80%] m-auto py-16 px-4 md:px-10 bg-white"
-    >
-      {/* === Header === */}
-      <div className="text-center mb-10">
-        <h2
-          className="text-3xl md:text-4xl font-bold text-orange-700 mb-2"
-          style={{ fontFamily: "Baloo, serif" }}
+    <div className=" bg-white ">
+      <section className="relative w-full flex flex-col justify-center items-center py-12 md:py-16 overflow-hidden min-h-[80vh]">
+        {/* === Section Header === */}
+        <motion.h1
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-3xl md:text-5xl font-extrabold text-orange-700 mb-10 tracking-wide text-center px-4"
+          style={{ fontFamily: "Baloo, sans-serif" }}
         >
-          अमृत विषयी माहिती
-        </h2>
-        <p className="text-gray-700 text-sm md:text-base max-w-3xl mx-auto">
-          महाराष्ट्र संशोधन, उन्नती व प्रशिक्षण प्रवोधिनी (अमृत) ही संस्था संशोधन,
-          प्रशिक्षण आणि विकास उपक्रमांद्वारे युवकांना कौशल्यविकास, रोजगार आणि
-          प्रगतीच्या संधी उपलब्ध करून देते.
-        </p>
-      </div>
+          महापुरुषांचे प्रेरणादायी विचार
+        </motion.h1>
 
-      {/* === Layout === */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
-        {/* === Left Menu === */}
-        <div className="flex flex-col gap-3 md:col-span-1">
-          <h3
-            className="text-base md:text-lg font-bold text-gray-800 border-b border-gray-300 pb-2"
-            style={{ fontFamily: "Baloo, serif" }}
+        {/* === Inner Container (Darker Gradient + Shadowed) === */}
+        <div className="relative z-20 w-[90%] md:w-[80%] rounded-3xl flex flex-col md:flex-row 
+          shadow-[0_20px_60px_rgba(0,0,0,0.25)] border border-orange-300/40
+          overflow-hidden md:h-[50vh] backdrop-blur-md transition-all duration-500">
+
+          {/* === LEFT SIDE IMAGE === */}
+          <div className="md:w-1/2 w-full flex justify-center items-center 
+         
+            p-8 sm:p-10 md:h-full h-[300px]">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={index}
+                src={leftImages[index]}
+                alt={data[index].title}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -40 }}
+                transition={{ duration: 0.8 }}
+                className="object-contain w-[250px] sm:w-[300px] md:w-[350px] h-[250px] sm:h-[300px] md:h-[350px] drop-shadow-[0_15px_20px_rgba(255,102,0,0.35)]"
+              />
+            </AnimatePresence>
+          </div>
+
+          {/* === RIGHT SIDE TEXT === */}
+          <div
+            className="md:w-1/2 w-full relative flex flex-col justify-center items-center text-center 
+            p-6 sm:p-10 bg-gradient-to-b from-orange-50 via-orange-100 to-orange-200 md:h-full h-auto"
           >
-            सामान्य माहिती
-          </h3>
-          <ul className="space-y-2 mt-2 text-gray-700">
-            {[
-              { id: "about", title: "अमृत विषयी" },
-              { id: "establishment", title: "अमृतची स्थापना" },
-              { id: "board", title: "संचालक मंडळ" },
-              { id: "initiatives", title: "उपक्रम आणि योजना" },
-              { id: "contact", title: "संपर्क माहिती" },
-            ].map((item) => (
-              <li
-                key={item.id}
-                onClick={() => setSelected(item.id)}
-                className={`cursor-pointer border-l-4 pl-2 transition-all ${
-                  selected === item.id
-                    ? "border-orange-600 text-orange-700 font-semibold"
-                    : "border-transparent hover:text-orange-600"
-                }`}
-              >
-                {item.title}
-              </li>
-            ))}
-          </ul>
-        </div>
+            {/* === Subtle Animated Orange Circle === */}
+            <motion.div
+              className="absolute inset-0 bg-center bg-no-repeat bg-contain opacity-70"
+              
+              animate={{
+                scale: [1, 1.05, 1],
+                opacity: [0.55, 0.8, 0.55],
+              }}
+              transition={{
+                duration: 6,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            ></motion.div>
 
-        {/* === Right Content === */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={selected}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
-            transition={{ duration: 0.5 }}
-            className="md:col-span-2 bg-gradient-to-br from-orange-50 via-orange-50 to-orange-100/70 border border-orange-300 
-              rounded-2xl shadow-md p-6 md:p-8 flex flex-col md:flex-row justify-between items-start"
-          >
-            {/* === Text Section === */}
-            <div className="flex-1 text-gray-800">
-              <h4
-                className="text-lg md:text-xl font-semibold text-orange-700 mb-3"
-                style={{ fontFamily: "Baloo, serif" }}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -100 }}
+                transition={{ duration: 0.8 }}
+                className="relative z-10"
               >
-                {
-                  {
-                    about: "अमृत विषयी",
-                    establishment: "अमृतची स्थापना",
-                    board: "संचालक मंडळ",
-                    initiatives: "उपक्रम आणि योजना",
-                    contact: "संपर्क माहिती",
-                  }[selected]
-                }
-              </h4>
-              <div className="text-sm leading-relaxed whitespace-pre-line">
-                {content[selected]}
-              </div>
-            </div>
-
-            {/* === Icons Section (Row on Mobile, Column on Desktop) === */}
-            <div className="flex flex-wrap md:flex-col justify-center md:justify-start items-center gap-4 md:gap-6 mt-6 md:mt-0 md:ml-6 w-full md:w-auto">
-              {iconSets[selected]?.map((item, i) => (
-                <motion.div
-                  key={i}
-                  custom={i}
-                  variants={iconVariants}
-                  initial="hidden"
-                  animate={isInView ? "visible" : "hidden"}
-                  className="flex flex-col items-center justify-center text-center"
+                <h2
+                  className="text-2xl md:text-4xl font-bold text-orange-800 mb-4 drop-shadow-[0_2px_2px_rgba(0,0,0,0.15)]"
+                  style={{ fontFamily: "Baloo, sans-serif" }}
                 >
-                  <motion.div
-                    animate={isInView ? floatingAnimation : {}}
-                    className="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-orange-500 
-                    bg-gradient-to-br from-orange-300 to-orange-500 text-white shadow-md"
-                  >
-                    {item.icon}
-                  </motion.div>
-                  <p className="mt-1 text-xs font-semibold text-orange-700">
-                    {item.label}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-    </section>
+                  {data[index].title}
+                </h2>
+                <p
+                  className="text-gray-800 text-base md:text-xl leading-relaxed italic max-w-md mx-auto"
+                  style={{ fontFamily: "Poppins, serif" }}
+                >
+                  {data[index].details}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+      </section>
+    </div>
   );
-}
+};
+
+export default MaharashtraShowcase;

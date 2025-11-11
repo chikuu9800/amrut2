@@ -58,10 +58,10 @@ export default function AmrutMissionVision() {
         {cards.map((card, index) => (
           <motion.div
             key={card.id}
-            className="bg-gradient-to-b from-transparent to-orange-500/40 rounded-2xl shadow-md hover:shadow-xl p-8 flex flex-col items-center transition-all border border-orange-100 hover:border-orange-200"
+            className="bg-gradient-to-b from-transparent to-orange-200/40 rounded-2xl shadow-md hover:shadow-xl p-8 flex flex-col items-center transition-all border border-orange-100 hover:border-orange-200"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: index * 0.2 }}
+            transition={{ duration: 0.2, delay: index * 0.2 }}
             viewport={{ once: true }}
             whileHover={{
               y: -8,

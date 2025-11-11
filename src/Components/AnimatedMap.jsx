@@ -133,7 +133,7 @@ const AnimatedMapCircle = () => {
     {/* === Right Section: Animated Map Circle === */}
     <div
       className="flex-1 relative flex items-center justify-center w-full 
-      h-[45vh] sm:h-[50vh] md:h-[70vh] 
+      h-[45vh] sm:h-[60vh] md:h-[70vh] 
       scale-[0.85] md:scale-[1] transition-none"
       style={{
         transform: "translateZ(0)",
@@ -143,8 +143,8 @@ const AnimatedMapCircle = () => {
     >
       {/* Outer Circle */}
       <div className="outer-ring absolute 
-        w-[260px] sm:w-[320px] md:w-[460px] 
-        h-[260px] sm:h-[320px] md:h-[460px] 
+        w-[180px] sm:w-[250px] md:w-[400px] 
+        h-[180px] sm:h-[250px] md:h-[400px] 
         border border-orange-300 rounded-full flex items-center justify-center">
         {outerIcons.map((Icon, index) => {
           const angle = (index / outerIcons.length) * 2 * Math.PI;
@@ -165,8 +165,8 @@ const AnimatedMapCircle = () => {
   
       {/* Inner Circle */}
       <div className="inner-ring absolute 
-        w-[180px] sm:w-[220px] md:w-[320px] 
-        h-[180px] sm:h-[220px] md:h-[320px] 
+        w-[90px] sm:w-[190px] md:w-[300px] 
+        h-[90px] sm:h-[190px] md:h-[300px] 
         border border-orange-200 rounded-full flex items-center justify-center">
         {innerIcons.map((Icon, index) => {
           const angle = (index / innerIcons.length) * 2 * Math.PI;
@@ -188,7 +188,7 @@ const AnimatedMapCircle = () => {
       {/* Maharashtra Map */}
       <div
         ref={mapRef}
-        className="relative w-[90px] sm:w-[120px] md:w-[200px] h-[90px] sm:h-[120px] md:h-[200px] z-10"
+        className="relative w-[50px] sm:w-[90px] md:w-[170px] h-[50px] sm:h-[90px] md:h-[170px] z-10"
       >
         <img
           src={mapImg}

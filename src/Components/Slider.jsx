@@ -21,28 +21,81 @@ export default function AboutAmrut() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
-  // Animation variants
+  // === Icon + Label Sets ===
+  const iconSets = {
+    about: [
+      { icon: <Brain size={20} />, label: "संशोधन" },
+      { icon: <Wrench size={20} />, label: "प्रशिक्षण" },
+      { icon: <Briefcase size={20} />, label: "रोजगाराच्या संधी" },
+    ],
+    establishment: [
+      { icon: <Brain size={20} />, label: "संकल्पना" },
+      { icon: <Wrench size={20} />, label: "प्रशिक्षण" },
+      { icon: <ArrowUp size={20} />, label: "स्वयंरोजगार" },
+    ],
+    board: [
+      { icon: <Landmark size={20} />, label: "राज्य शासन अधिकारी" },
+      { icon: <Lightbulb size={20} />, label: "सेवाश्रय" },
+      { icon: <Handshake size={20} />, label: "सदस्य मार्गदर्शन" },
+    ],
+    initiatives: [
+      { icon: <Wrench size={20} />, label: "प्रशिक्षण" },
+      { icon: <IndianRupee size={20} />, label: "स्वयंरोजगार" },
+      { icon: <Factory size={20} />, label: "उद्योग दिशा" },
+    ],
+    contact: [
+      { icon: <Building size={20} />, label: "मुख्य कार्यालय" },
+      { icon: <Phone size={20} />, label: "दूरध्वनी" },
+      { icon: <Mail size={20} />, label: "ईमेल" },
+    ],
+  };
+
+  // === Icon Animations ===
   const iconVariants = {
-    hidden: { opacity: 0, y: 40 },
+    hidden: { opacity: 0, y: 30 },
     visible: (i) => ({
       opacity: 1,
       y: 0,
-      transition: {
-        delay: i * 0.3,
-        duration: 0.6,
-        ease: "easeOut",
-      },
+      transition: { delay: i * 0.2, duration: 0.6, ease: "easeOut" },
     }),
   };
 
   const floatingAnimation = {
-    y: [0, -5, 0],
-    transition: {
-      duration: 2,
-      repeat: Infinity,
-      repeatType: "mirror",
-      ease: "easeInOut",
-    },
+    y: [0, -4, 0],
+    transition: { duration: 2, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" },
+  };
+
+  // === Text Content ===
+  const content = {
+    about: `महाराष्ट्र संशोधन, उन्नती व प्रशिक्षण प्रवोधिनी (अमृत) ही एक
+स्वायत्त संस्था आहे जी महाराष्ट्र शासनाने स्थापन केली आहे.
+राज्यातील युवकांना संशोधन, कौशल्यविकास व प्रशिक्षणाच्या माध्यमातून
+रोजगाराच्या संधी उपलब्ध करून देणे हा या संस्थेचा प्रमुख उद्देश आहे.`,
+    establishment: `दिनांक २२ ऑगस्ट २०१९ रोजी महाराष्ट्र शासनाने शासन निर्णयाद्वारे
+'अमृत' या संस्थेची स्थापना केली. या संस्थेचा हेतू संशोधन आणि
+प्रशिक्षणाद्वारे युवकांना सक्षम करणे व समाजातील सर्व घटकांचा
+विकास घडवणे आहे.`,
+    board: `अमृतच्या कार्याची दिशा ठरवण्यासाठी सक्षम संचालक मंडळ कार्यरत आहे.
+या मंडळात राज्य शासनातील वरिष्ठ अधिकारी, क्षेत्रातील तज्ज्ञ व
+समाजहितासाठी कार्य करणारे सदस्य आहेत.`,
+    initiatives: `अमृत संस्थेमार्फत विविध प्रशिक्षण, स्वयंरोजगार व उद्योजकता विकासाच्या
+योजना राबविल्या जातात. या योजनांद्वारे युवकांना आत्मनिर्भरतेकडे वाटचाल
+करण्याची प्रेरणा दिली जाते.`,
+    contact: (
+      <div className="space-y-3 text-sm md:text-base">
+        <p>
+          <span className="text-orange-700 font-bold">अमृत मुख्य कार्यालय:</span>
+          <br />
+          ५ वा मजला, हनुमान रोड, मंत्रालय, मुंबई – ४०००३२
+        </p>
+        <p>
+          <span className="text-orange-700 font-bold">दूरध्वनी:</span> ०२२-२२२२२२२२
+        </p>
+        <p>
+          <span className="text-orange-700 font-bold">ईमेल:</span> info@mahaamrut.org.in
+        </p>
+      </div>
+    ),
   };
 
   return (
@@ -58,24 +111,24 @@ export default function AboutAmrut() {
         >
           अमृत विषयी माहिती
         </h2>
-        <p className="text-gray-600 text-base md:text-lg max-w-3xl mx-auto">
-          महाराष्ट्र संशोधन, उन्नती व प्रशिक्षण प्रवोधिनी (अमृत) ही संस्था
-          संशोधन, प्रशिक्षण आणि विकास उपक्रमांद्वारे युवकांना कौशल्यविकास,
-          रोजगार आणि प्रगतीच्या संधी उपलब्ध करून देते.
+        <p className="text-gray-700 text-sm md:text-base max-w-3xl mx-auto">
+          महाराष्ट्र संशोधन, उन्नती व प्रशिक्षण प्रवोधिनी (अमृत) ही संस्था संशोधन,
+          प्रशिक्षण आणि विकास उपक्रमांद्वारे युवकांना कौशल्यविकास, रोजगार आणि
+          प्रगतीच्या संधी उपलब्ध करून देते.
         </p>
       </div>
 
       {/* === Layout === */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
         {/* === Left Menu === */}
         <div className="flex flex-col gap-3 md:col-span-1">
           <h3
-            className="text-lg md:text-xl font-bold text-gray-800 border-b border-gray-300 pb-2"
+            className="text-base md:text-lg font-bold text-gray-800 border-b border-gray-300 pb-2"
             style={{ fontFamily: "Baloo, serif" }}
           >
             सामान्य माहिती
           </h3>
-          <ul className="space-y-2 mt-2 text-gray-700 text-base">
+          <ul className="space-y-2 mt-2 text-gray-700">
             {[
               { id: "about", title: "अमृत विषयी" },
               { id: "establishment", title: "अमृतची स्थापना" },
@@ -105,14 +158,14 @@ export default function AboutAmrut() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -30 }}
-            transition={{ duration: 0.6 }}
-            className="md:col-span-2 bg-gradient-to-l from-transparent to-orange-500/30 shadow-lg rounded-2xl 
-              p-6 md:p-8 flex flex-col md:flex-row justify-between items-start border border-orange-400/70 relative overflow-hidden"
+            transition={{ duration: 0.5 }}
+            className="md:col-span-2 bg-gradient-to-br from-orange-50 via-orange-50 to-orange-100/70 border border-orange-300 
+              rounded-2xl shadow-md p-6 md:p-8 flex flex-col md:flex-row justify-between items-start"
           >
             {/* === Text Section === */}
-            <div className="flex-1 text-gray-700 md:pr-10">
+            <div className="flex-1 text-gray-800">
               <h4
-                className="text-xl md:text-2xl font-semibold text-orange-700 mb-3"
+                className="text-lg md:text-xl font-semibold text-orange-700 mb-3"
                 style={{ fontFamily: "Baloo, serif" }}
               >
                 {
@@ -125,140 +178,38 @@ export default function AboutAmrut() {
                   }[selected]
                 }
               </h4>
-
-              {/* Descriptions */}
-              {selected === "about" && (
-                <p className="text-base md:text-lg leading-relaxed whitespace-pre-line">
-                  महाराष्ट्र संशोधन, उन्नती व प्रशिक्षण प्रवोधिनी (अमृत) ही एक स्वायत्त
-                  संस्था आहे जी महाराष्ट्र शासनाने स्थापन केली आहे. राज्यातील युवकांना
-                  संशोधन, कौशल्यविकास व प्रशिक्षणाच्या माध्यमातून रोजगाराच्या संधी
-                  उपलब्ध करून देणे हा या संस्थेचा प्रमुख उद्देश आहे.
-                </p>
-              )}
-
-              {selected === "establishment" && (
-                <p className="text-base md:text-lg leading-relaxed whitespace-pre-line">
-                  दिनांक २२ ऑगस्ट २०१९ रोजी महाराष्ट्र शासनाने शासन निर्णयाद्वारे 'अमृत'
-                  या संस्थेची स्थापना केली. या संस्थेचा हेतू म्हणजे संशोधन आणि
-                  प्रशिक्षणाद्वारे युवकांना सक्षम करणे व समाजातील सर्व घटकांचा विकास
-                  घडवणे.
-                </p>
-              )}
-
-              {selected === "board" && (
-                <p className="text-base md:text-lg leading-relaxed whitespace-pre-line">
-                  अमृतच्या कार्याची दिशा ठरवण्यासाठी सक्षम संचालक मंडळ कार्यरत आहे.
-                  या मंडळात राज्य शासनातील वरिष्ठ अधिकारी, क्षेत्रातील तज्ज्ञ व समाजहिताच्या
-                  दृष्टीने कार्य करणारे सदस्य यांचा समावेश आहे.
-                </p>
-              )}
-
-              {selected === "initiatives" && (
-                <p className="text-base md:text-lg leading-relaxed whitespace-pre-line">
-                  अमृत संस्थेमार्फत विविध प्रशिक्षण, स्वयंरोजगार व उद्योजकता विकासाच्या
-                  योजना राबविण्यात येतात. या योजनांद्वारे युवकांना आत्मनिर्भरतेकडे वाटचाल
-                  करण्याची प्रेरणा दिली जाते.
-                </p>
-              )}
-
-              {selected === "contact" && (
-                <div className="space-y-3 text-sm md:text-base">
-                  <p>
-                    <span className="text-orange-700 font-bold">
-                      अमृत मुख्य कार्यालय:
-                    </span>{" "}
-                    <br />
-                    ५ वा मजला, हनुमान रोड, मंत्रालय, मुंबई – ४०००३२
-                  </p>
-                  <p>
-                    <span className="text-orange-700 font-bold">दूरध्वनी:</span>{" "}
-                    ०२२-२२२२२२२२
-                  </p>
-                  <p>
-                    <span className="text-orange-700 font-bold">ईमेल:</span>{" "}
-                    info@mahaamrut.org.in
-                  </p>
-                </div>
-              )}
+              <div className="text-sm leading-relaxed whitespace-pre-line">
+                {content[selected]}
+              </div>
             </div>
 
-            {/* === ICONS SECTION (Now perfectly aligned) === */}
-            <div className="flex flex-col items-center justify-center gap-6 w-full md:w-[160px] md:items-center md:justify-center md:border-l md:border-orange-400/60 md:pl-8">
-              {/* Common icon layout logic */}
-              {[
-                selected === "about" && [
-                  { icon: <Brain size={24} />, label: "संशोधन" },
-                  { icon: <Wrench size={24} />, label: "प्रशिक्षण" },
-                  { icon: <Briefcase size={24} />, label: "रोजगाराच्या संधी" },
-                ],
-                selected === "establishment" && [
-                  { icon: <Brain size={24} />, label: "संकल्पना" },
-                  { icon: <Wrench size={24} />, label: "प्रशिक्षण" },
-                  { icon: <ArrowUp size={24} />, label: "स्वयंरोजगार" },
-                ],
-                selected === "board" && [
-                  { icon: <Landmark size={24} />, label: "राज्य शासन अधिकारी" },
-                  { icon: <Lightbulb size={24} />, label: "सेवाश्रय" },
-                  { icon: <Handshake size={24} />, label: "सदस्य मार्गदर्शन" },
-                ],
-                selected === "initiatives" && [
-                  { icon: <Wrench size={24} />, label: "प्रशिक्षण" },
-                  { icon: <IndianRupee size={24} />, label: "स्वयंरोजगार" },
-                  { icon: <Factory size={24} />, label: "उद्योग दिशा" },
-                ],
-                selected === "contact" && [
-                  { icon: <Building size={24} />, label: "मुख्य कार्यालय" },
-                  { icon: <Phone size={24} />, label: "दूरध्वनी" },
-                  { icon: <Mail size={24} />, label: "ईमेल" },
-                ],
-              ]
-                .filter(Boolean)
-                .flat()
-                .map((item, i) => (
+            {/* === Icons Section (Row on Mobile, Column on Desktop) === */}
+            <div className="flex flex-wrap md:flex-col justify-center md:justify-start items-center gap-4 md:gap-6 mt-6 md:mt-0 md:ml-6 w-full md:w-auto">
+              {iconSets[selected]?.map((item, i) => (
+                <motion.div
+                  key={i}
+                  custom={i}
+                  variants={iconVariants}
+                  initial="hidden"
+                  animate={isInView ? "visible" : "hidden"}
+                  className="flex flex-col items-center justify-center text-center"
+                >
                   <motion.div
-                    key={i}
-                    custom={i}
-                    variants={iconVariants}
-                    initial="hidden"
-                    animate={isInView ? "visible" : "hidden"}
-                    className="flex flex-col items-center justify-center"
+                    animate={isInView ? floatingAnimation : {}}
+                    className="flex items-center justify-center w-10 h-10 md:w-10 md:h-10 rounded-full border-2 border-orange-500 
+                    bg-gradient-to-br from-orange-300 to-orange-500 text-white shadow-md"
                   >
-                    <motion.div
-                      className="icon-box"
-                      animate={isInView ? floatingAnimation : {}}
-                    >
-                      {item.icon}
-                    </motion.div>
-                    <p className="icon-label">{item.label}</p>
+                    {item.icon}
                   </motion.div>
-                ))}
+                  <p className="mt-1 text-xs font-semibold text-orange-700 md:text-[12px] sm:text-[7px]">
+                    {item.label}
+                  </p>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </AnimatePresence>
       </div>
-
-      {/* === Styles === */}
-      <style jsx>{`
-        .icon-box {
-          width: 3rem;
-          height: 3rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 9999px;
-          border: 4px solid #ff7a00;
-          background: linear-gradient(to bottom right, #ffa94d, #ff7a00);
-          color: white;
-          box-shadow: 0 4px 12px rgba(255, 122, 0, 0.3);
-        }
-        .icon-label {
-          margin-top: 0.5rem;
-          font-size: 0.75rem;
-          font-weight: 600;
-          color: #e36414;
-          text-align: center;
-        }
-      `}</style>
     </section>
   );
 }
