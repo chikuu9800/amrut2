@@ -21,7 +21,7 @@ export default function AboutAmrut() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
-  // Animation: bottom-to-top reveal + floating
+  // Animation variants
   const iconVariants = {
     hidden: { opacity: 0, y: 40 },
     visible: (i) => ({
@@ -35,7 +35,6 @@ export default function AboutAmrut() {
     }),
   };
 
-  // Floating motion after appearing
   const floatingAnimation = {
     y: [0, -5, 0],
     transition: {
@@ -107,10 +106,11 @@ export default function AboutAmrut() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -30 }}
             transition={{ duration: 0.6 }}
-            className="md:col-span-2 bg-gradient-to-l from-transparent to-orange-500/30 shadow-xl rounded-2xl p-6 md:p-8 flex flex-col md:flex-row justify-between items-start border border-orange-100 relative overflow-hidden"
+            className="md:col-span-2 bg-gradient-to-l from-transparent to-orange-500/30 shadow-lg rounded-2xl 
+              p-6 md:p-8 flex flex-col md:flex-row justify-between items-start border border-orange-400/70 relative overflow-hidden"
           >
             {/* === Text Section === */}
-            <div className="flex-1 text-gray-700 md:pr-8">
+            <div className="flex-1 text-gray-700 md:pr-10">
               <h4
                 className="text-xl md:text-2xl font-semibold text-orange-700 mb-3"
                 style={{ fontFamily: "Baloo, serif" }}
@@ -182,150 +182,56 @@ export default function AboutAmrut() {
               )}
             </div>
 
-            {/* === ICONS SECTION === */}
-            <div className="flex flex-col items-center justify-center gap-5 mt-8 md:mt-0 md:mr-6">
-              {selected === "about" && (
-                <>
+            {/* === ICONS SECTION (Now perfectly aligned) === */}
+            <div className="flex flex-col items-center justify-center gap-6 w-full md:w-[160px] md:items-center md:justify-center md:border-l md:border-orange-400/60 md:pl-8">
+              {/* Common icon layout logic */}
+              {[
+                selected === "about" && [
+                  { icon: <Brain size={24} />, label: "संशोधन" },
+                  { icon: <Wrench size={24} />, label: "प्रशिक्षण" },
+                  { icon: <Briefcase size={24} />, label: "रोजगाराच्या संधी" },
+                ],
+                selected === "establishment" && [
+                  { icon: <Brain size={24} />, label: "संकल्पना" },
+                  { icon: <Wrench size={24} />, label: "प्रशिक्षण" },
+                  { icon: <ArrowUp size={24} />, label: "स्वयंरोजगार" },
+                ],
+                selected === "board" && [
+                  { icon: <Landmark size={24} />, label: "राज्य शासन अधिकारी" },
+                  { icon: <Lightbulb size={24} />, label: "सेवाश्रय" },
+                  { icon: <Handshake size={24} />, label: "सदस्य मार्गदर्शन" },
+                ],
+                selected === "initiatives" && [
+                  { icon: <Wrench size={24} />, label: "प्रशिक्षण" },
+                  { icon: <IndianRupee size={24} />, label: "स्वयंरोजगार" },
+                  { icon: <Factory size={24} />, label: "उद्योग दिशा" },
+                ],
+                selected === "contact" && [
+                  { icon: <Building size={24} />, label: "मुख्य कार्यालय" },
+                  { icon: <Phone size={24} />, label: "दूरध्वनी" },
+                  { icon: <Mail size={24} />, label: "ईमेल" },
+                ],
+              ]
+                .filter(Boolean)
+                .flat()
+                .map((item, i) => (
                   <motion.div
-                    custom={0}
+                    key={i}
+                    custom={i}
                     variants={iconVariants}
                     initial="hidden"
                     animate={isInView ? "visible" : "hidden"}
+                    className="flex flex-col items-center justify-center"
                   >
                     <motion.div
                       className="icon-box"
                       animate={isInView ? floatingAnimation : {}}
                     >
-                      <Brain size={24} />
+                      {item.icon}
                     </motion.div>
-                    <p className="icon-label">संशोधन</p>
+                    <p className="icon-label">{item.label}</p>
                   </motion.div>
-
-                  <motion.div
-                    custom={1}
-                    variants={iconVariants}
-                    initial="hidden"
-                    animate={isInView ? "visible" : "hidden"}
-                  >
-                    <motion.div
-                      className="icon-box"
-                      animate={isInView ? floatingAnimation : {}}
-                    >
-                      <Wrench size={24} />
-                    </motion.div>
-                    <p className="icon-label">प्रशिक्षण</p>
-                  </motion.div>
-
-                  <motion.div
-                    custom={2}
-                    variants={iconVariants}
-                    initial="hidden"
-                    animate={isInView ? "visible" : "hidden"}
-                  >
-                    <motion.div
-                      className="icon-box"
-                      animate={isInView ? floatingAnimation : {}}
-                    >
-                      <Briefcase size={24} />
-                    </motion.div>
-                    <p className="icon-label">रोजगाराच्या संधी</p>
-                  </motion.div>
-                </>
-              )}
-
-              {selected === "establishment" && (
-                <>
-                  <motion.div custom={0} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
-                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
-                      <Brain size={24} />
-                    </motion.div>
-                    <p className="icon-label">संकल्पना</p>
-                  </motion.div>
-
-                  <motion.div custom={1} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
-                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
-                      <Wrench size={24} />
-                    </motion.div>
-                    <p className="icon-label">प्रशिक्षण</p>
-                  </motion.div>
-
-                  <motion.div custom={2} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
-                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
-                      <ArrowUp size={24} />
-                    </motion.div>
-                    <p className="icon-label">स्वयंरोजगार</p>
-                  </motion.div>
-                </>
-              )}
-
-              {selected === "board" && (
-                <>
-                  <motion.div custom={0} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
-                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
-                      <Landmark size={24} />
-                    </motion.div>
-                    <p className="icon-label">राज्य शासन अधिकारी</p>
-                  </motion.div>
-                  <motion.div custom={1} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
-                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
-                      <Lightbulb size={24} />
-                    </motion.div>
-                    <p className="icon-label">सेवाश्रय</p>
-                  </motion.div>
-                  <motion.div custom={2} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
-                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
-                      <Handshake size={24} />
-                    </motion.div>
-                    <p className="icon-label">सदस्य मार्गदर्शन</p>
-                  </motion.div>
-                </>
-              )}
-
-              {selected === "initiatives" && (
-                <>
-                  <motion.div custom={0} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
-                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
-                      <Wrench size={24} />
-                    </motion.div>
-                    <p className="icon-label">प्रशिक्षण</p>
-                  </motion.div>
-                  <motion.div custom={1} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
-                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
-                      <IndianRupee size={24} />
-                    </motion.div>
-                    <p className="icon-label">स्वयंरोजगार</p>
-                  </motion.div>
-                  <motion.div custom={2} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
-                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
-                      <Factory size={24} />
-                    </motion.div>
-                    <p className="icon-label">उद्योग दिशा</p>
-                  </motion.div>
-                </>
-              )}
-
-              {selected === "contact" && (
-                <>
-                  <motion.div custom={0} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
-                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
-                      <Building size={24} />
-                    </motion.div>
-                    <p className="icon-label">मुख्य कार्यालय</p>
-                  </motion.div>
-                  <motion.div custom={1} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
-                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
-                      <Phone size={24} />
-                    </motion.div>
-                    <p className="icon-label">दूरध्वनी</p>
-                  </motion.div>
-                  <motion.div custom={2} variants={iconVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
-                    <motion.div className="icon-box" animate={isInView ? floatingAnimation : {}}>
-                      <Mail size={24} />
-                    </motion.div>
-                    <p className="icon-label">ईमेल</p>
-                  </motion.div>
-                </>
-              )}
+                ))}
             </div>
           </motion.div>
         </AnimatePresence>
@@ -356,5 +262,3 @@ export default function AboutAmrut() {
     </section>
   );
 }
-
-
